@@ -57,19 +57,22 @@ NeuralNetwork.prototype.createWeights = function() {
     }
 }
 
+NeuralNetwork.prototype.mutateWeights = function() {
+
+    // Mutate weights
+
+    let newWeights = []
+
+    for (let weight of this.weights) newWeights.push(mutate(weight, 20))
+
+    this.weights = newWeights
+}
+
 NeuralNetwork.prototype.applyWeights = function() {
 
     // If no weights exist
 
     if (this.weights.length == 0) this.createWeights()
-
-    // Otherwise mutate weights
-
-    let newWeights = []
-
-    for (let weight of this.weights) newWeights.push(mutate(weight, 5))
-
-    this.weights = newWeights
 }
 
 // Convert the weights into a single arbitrary value
@@ -88,20 +91,30 @@ NeuralNetwork.prototype.activate = function() {
     this.activateValue = Math.max(this.transferValue, 0)
 }
 
+NeuralNetwork.prototype.run = function() {
 
-/* network.applyWeights()
+    this.applyWeights()
 
-console.log(network.activate) */
-
-function train() {
-
-    network.applyWeights()
-
-    network.transfer()
+    this.transfer()
     
-    network.activate()
+    this.activate()
 
-    console.log(Math.floor(network.activateValue))
+    console.log(Math.floor(this.activateValue))
 }
 
-setInterval(train, 100)
+NeuralNetwork.prototype.learn = function() {
+
+    console.log("Learned")
+
+    this.mutateWeights()
+}
+
+setInterval((function() {
+
+    network.run()
+}), 1)
+
+setInterval((function() {
+
+    network.learn()
+}), 10)
