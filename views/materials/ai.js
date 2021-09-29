@@ -37,7 +37,7 @@ class NeuralNetwork {
 // Define options for our network
 
 let opts = {
-    inputs: [22, 24, 1],
+    inputs: [2, 1],
     weights: [],
 }
 
