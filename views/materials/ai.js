@@ -1,108 +1,119 @@
+let defaults = {
+    learningRate: 1,
+    bias: 1,
+}
+
 class NeuralNetwork {
-    constructor() {
+    constructor(opts) {
 
+        // Assign default values
+
+        for (let valueName in defaults) {
+
+            this[valueName] = defaults[valueName]
+        }
+
+        // Assign opts
+
+        for (let valueName in opts) {
+
+            this[valueName] = opts[valueName]
+        }
     }
-}
+    mutateWeights() {
 
-// Randomly adjust a value by a set amount
+        // Randomly adjust a value by a set amount
 
-function mutate(value, amount) {
+        function mutate(value, amount) {
 
-    // Decide if to subract or add
+            // Decide if to subract or add
 
-    let boolean = Math.floor(Math.random() * 2) + 1
+            let boolean = Math.floor(Math.random() * 2)
 
-    // Random amount to mutate
+            // Random amount to mutate
 
-    let mutation = Math.random() * amount
+            let mutation = Math.random() * amount
 
-    // Apply mutation
+            // Apply mutation
 
-    if (boolean == 1) value += Math.random() * mutation
-    if (boolean == 2) value -= Math.random() * mutation
+            if (boolean == 0) value += Math.random() * mutation
+            if (boolean == 1) value -= Math.random() * mutation
 
-    return value
-}
+            return value
+        }
 
-// Weight the inputs by arbitrary values to inform the AI
+        // Mutate weights
 
-NeuralNetwork.prototype.mutateWeights = function() {
+        let newWeights = []
 
-    // Mutate weights
+        for (let weight of this.weights) newWeights.push(mutate(weight, this.learningRate))
 
-    let newWeights = []
-
-    for (let weight of this.weights) newWeights.push(mutate(weight, 20))
-
-    this.weights = newWeights
-}
-
-NeuralNetwork.prototype.createWeights = function() {
-
-    let value = Math.floor(Math.random() * 5)
-
-    this.weights = []
-    for (let input of this.inputs) this.weights.push(value)
-}
-
-NeuralNetwork.prototype.updateWeights = function() {
-
-    this.weightResults = []
-
-    let i = 0
-
-    for (let input of this.inputs) {
-
-        let weight = this.weights[i]
-
-        this.weightResults.push(input * weight)
-
-        i++
+        this.weights = newWeights
     }
-}
+    createWeights() {
 
-NeuralNetwork.prototype.applyWeights = function() {
+        let value = Math.random() * this.learningRate
 
-    // If no weights exist create them
+        this.weights = []
 
-    if (!this.weights) this.createWeights()
+        for (let input of this.inputs) this.weights.push(value)
+    }
+    updateWeights() {
+
+        this.weightResults = []
+
+        let i = 0
+
+        for (let input of this.inputs) {
+
+            let weight = this.weights[i]
+
+            this.weightResults.push(input * weight)
+
+            i++
+        }
+    }
+    applyWeights() {
+
+        // If no weights exist create them
+
+        if (!this.weights) this.createWeights()
 
 
-    // Update weightResults to match inputs
+        // Update weightResults to match inputs
 
-    this.updateWeights()
+        this.updateWeights()
+    }
+    transfer() {
+
+        this.transferValue = 0
+
+        for (let weightResult of this.weightResults) this.transferValue += weightResult
+    }
+    activate() {
+
+        this.activateValue = Math.max(this.transferValue, 0)
+    }
+    run() {
+
+        this.applyWeights()
+
+        this.transfer()
+
+        this.activate()
+
+        console.log((this.activateValue).toFixed(2))
+    }
+    learn() {
+
+        console.log("Learned")
+
+        this.mutateWeights()
+    }
 }
 
 // Convert the weights into a single arbitrary value
 
-NeuralNetwork.prototype.transfer = function() {
-
-    this.transferValue = 0
-
-    for (let weightResult of this.weightResults) this.transferValue += weightResult
-}
-
 // Make sure the value is greater than 0
-
-NeuralNetwork.prototype.activate = function() {
-
-    this.activateValue = (Math.max(this.transferValue, 0)).toFixed(2)
-}
-
-NeuralNetwork.prototype.run = function() {
-
-    this.applyWeights()
-
-    this.transfer()
-
-    this.activate()
-}
-
-NeuralNetwork.prototype.learn = function() {
-
-    console.log("Learned")
-
-    this.mutateWeights()
-}
 
 export { NeuralNetwork }
