@@ -4,20 +4,13 @@ let defaults = {
 }
 
 class NeuralNetwork {
-    constructor(opts) {
+    constructor() {
 
         // Assign default values
 
         for (let valueName in defaults) {
 
             this[valueName] = defaults[valueName]
-        }
-
-        // Assign opts
-
-        for (let valueName in opts) {
-
-            this[valueName] = opts[valueName]
         }
     }
     mutateWeights() {
@@ -94,7 +87,20 @@ class NeuralNetwork {
 
         this.activateValue = Math.max(this.transferValue, 0)
     }
+    train() {
+
+
+    }
     run() {
+
+        // Assign opts
+
+        for (let valueName in opts) {
+
+            this[valueName] = opts[valueName]
+        }
+
+        this.inputs.push(this.bias)
 
         this.applyWeights()
 
@@ -109,6 +115,20 @@ class NeuralNetwork {
         console.log("Learned")
 
         this.mutateWeights()
+    }
+}
+
+class Layer {
+    constructor(opts) {
+
+
+    }
+}
+
+class Perceptron {
+    constructor(opts) {
+
+
     }
 }
 

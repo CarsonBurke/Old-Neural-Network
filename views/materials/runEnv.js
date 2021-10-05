@@ -1,6 +1,9 @@
 import { NeuralNetwork } from "./ai.js"
 
-let network = new NeuralNetwork({ inputs: [1, 5] })
+let network = new NeuralNetwork({
+    inputs: [1, 5],
+    layers: 3,
+})
 
 setInterval(function() {
 
