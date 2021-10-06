@@ -275,6 +275,7 @@ class NeuralNetwork {
                 let displayValues = {
                     inputs: perceptron.inputs,
                     weights: perceptron.weights,
+                    weightResults: perceptron.weightResults,
                     transfer: perceptron.transferValue,
                     activate: perceptron.activateValue,
                 }
@@ -299,7 +300,7 @@ class NeuralNetwork {
 
                     perceptron.titleEl.classList.add("perceptronTitle")
 
-                    perceptron.titleEl.innerText = "Name: " + perceptronName
+                    perceptron.titleEl.innerText = "L: " + layerName + " P: " + perceptronName
 
                     perceptron.parentEl.appendChild(perceptron.titleEl)
 
@@ -324,6 +325,8 @@ class NeuralNetwork {
 
                         perceptron.contentEls[valueName].classList.add("perceptronContent")
 
+                        perceptron.contentEls[valueName].id = valueName + perceptronName
+
                         perceptron.parentEl.appendChild(perceptron.contentEls[valueName])
                     }
                 }
@@ -332,9 +335,9 @@ class NeuralNetwork {
 
                     let value = displayValues[valueName]
 
-                    perceptron.contentEls.activate.innerText = value
+                    let el = document.getElementById(valueName + perceptronName)
 
-                    perceptron.contentEls[valueName].innerText = value
+                    el.innerText = value
                 }
             }
         }
