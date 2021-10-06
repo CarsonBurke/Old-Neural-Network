@@ -2,26 +2,20 @@ import { NeuralNetwork } from "./ai.js"
 
 let network = new NeuralNetwork()
 
-network.addLayer({
-    perceptrons: 1,
-})
+network.addLayer({})
 
-network.addLayer({
-
-})
-
-console.log(network.layers)
+/* console.log(network.layers) */
 
 let layer1 = network.layers[0]
 
-layer1.addPerceptron({
-    inputs: [1, 5]
-})
+layer1.addPerceptron()
 
 setInterval(function() {
 
-    network.run()
-}, 100)
+    network.run({
+        inputs: [1, 5]
+    })
+}, 200)
 
 setInterval(function() {
 

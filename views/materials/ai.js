@@ -1,34 +1,33 @@
 let defaults = {
     learningRate: 1,
     bias: 1,
-    layers: {},
 }
 
 class Layer {
-    constructor(opts) {
+    constructor() {
 
-
+        this.perceptrons = {}
     }
-    addPerceptron(opts) {
+    addPerceptron() {
 
         // Set the requested layer to have the requested inputs
 
-        let layer = this.layer
+        let layer = this
+
+        // Find number of perceptrons in this layer
 
         let perceptronCount = Object.keys(layer.perceptrons).length
 
-        let perceptron = layer.perceptrons[perceptronCount]
+        // Create and add new perceptron to the layer
 
-        perceptron = new Perceptron({
-            inputs: opts.inputs,
-        })
+        layer.perceptrons[perceptronCount] = new Perceptron()
     }
 }
 
 class Perceptron {
-    constructor(opts) {
+    constructor() {
 
-        this.inputs = opts.inputs
+
     }
     mutateWeights() {
 
@@ -62,13 +61,22 @@ class Perceptron {
     }
     createWeights() {
 
-        let value = Math.random() * this.learningRate
+        // Create one weight per input
 
         this.weights = []
 
-        for (let input of this.inputs) this.weights.push(value)
+        for (let input of this.inputs) {
+
+            // Get a random value relative to the size of learningRate
+
+            let value = Math.random() * this.learningRate
+
+            this.weights.push(value)
+        }
     }
     updateWeights() {
+
+        // Reset weight results
 
         this.weightResults = []
 
@@ -89,7 +97,6 @@ class Perceptron {
 
         if (!this.weights) this.createWeights()
 
-
         // Update weightResults to match inputs
 
         this.updateWeights()
@@ -104,16 +111,22 @@ class Perceptron {
 
         this.activateValue = Math.max(this.transferValue, 0)
     }
-    run() {
+    run(opts) {
 
-        // Assign opts
+        // Assign opts to usable values
 
-        for (let valueName in opts) {
+        let importantValues = opts.importantValues
 
-            this[valueName] = opts[valueName]
+        for (let valueName in importantValues) {
+
+            this[valueName] = importantValues[valueName]
         }
 
+        this.inputs = opts.inputs
+
         this.inputs.push(this.bias)
+
+        // Run commands to take inputs into an end result
 
         this.applyWeights()
 
@@ -132,7 +145,7 @@ class Perceptron {
 }
 
 class NeuralNetwork {
-    constructor() {
+    constructor(opts) {
 
         // Assign default values
 
@@ -140,14 +153,22 @@ class NeuralNetwork {
 
             this[valueName] = defaults[valueName]
         }
+
+        this.layers = {}
+
+
+        // Assign opts
+
+        for (let valueName in opts) {
+
+            this[valueName] = opts[valueName]
+        }
     }
     addLayer(opts) {
 
         let layersCount = Object.keys(this.layers).length
 
-        let layer = this.layers[layersCount]
-
-        layer = new Layer({
+        this.layers[layersCount] = new Layer({
             perceptrons: opts.perceptrons
         })
     }
@@ -159,9 +180,9 @@ class NeuralNetwork {
 
             let layer = this.layers[layerName]
 
-            for (let perceptronName in layer) {
+            for (let perceptronName in layer.perceptrons) {
 
-                let perceptron = layer[perceptronName]
+                let perceptron = layer.perceptrons[perceptronName]
 
                 perceptrons.push(perceptron)
             }
@@ -173,13 +194,61 @@ class NeuralNetwork {
 
 
     }
-    run() {
+    getImportantValues() {
 
-        let perceptrons = this.getPerceptrons()
+        let values = {}
 
-        for (let perceptron of perceptrons) perceptron.run()
+        for (let valueName in defaults) {
+
+            values[valueName] = this[valueName]
+        }
+
+        return values
+    }
+    run(opts) {
+
+        function findInputs(layerName, perceptronName) {
+
+            // If in first layer give default inputs
+
+            if (layerName == 0) {
+
+                return opts.inputs
+            }
+
+            // Otherwise give inputs from the previous layers' outputs
+
+
+        }
+
+        // Loop through each layer in the network
+
+        for (let layerName in this.layers) {
+
+            let layer = this.layers[layerName]
+
+            // loop through each perceptron in the layer
+
+            for (let perceptronName in layer.perceptrons) {
+
+                let perceptron = layer.perceptrons[perceptronName]
+
+                // Use the layer and perceptron location to idenify what inputs it should have
+
+                let inputs = findInputs(layerName, perceptronName)
+
+                // Run the perceptron
+
+                perceptron.run({
+                    importantValues: this.getImportantValues(),
+                    inputs: inputs,
+                })
+            }
+        }
     }
     learn() {
+
+        // For each perceptron mutate their weights
 
         let perceptrons = this.getPerceptrons()
 
