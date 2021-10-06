@@ -1,17 +1,34 @@
 let defaults = {
     learningRate: 1,
     bias: 1,
+    layers: {},
 }
 
-class NeuralNetwork {
-    constructor() {
+class Layer {
+    constructor(opts) {
 
-        // Assign default values
 
-        for (let valueName in defaults) {
+    }
+    addPerceptron(opts) {
 
-            this[valueName] = defaults[valueName]
-        }
+        // Set the requested layer to have the requested inputs
+
+        let layer = this.layer
+
+        let perceptronCount = Object.keys(layer.perceptrons).length
+
+        let perceptron = layer.perceptrons[perceptronCount]
+
+        perceptron = new Perceptron({
+            inputs: opts.inputs,
+        })
+    }
+}
+
+class Perceptron {
+    constructor(opts) {
+
+        this.inputs = opts.inputs
     }
     mutateWeights() {
 
@@ -87,10 +104,6 @@ class NeuralNetwork {
 
         this.activateValue = Math.max(this.transferValue, 0)
     }
-    train() {
-
-
-    }
     run() {
 
         // Assign opts
@@ -118,17 +131,59 @@ class NeuralNetwork {
     }
 }
 
-class Layer {
-    constructor(opts) {
+class NeuralNetwork {
+    constructor() {
+
+        // Assign default values
+
+        for (let valueName in defaults) {
+
+            this[valueName] = defaults[valueName]
+        }
+    }
+    addLayer(opts) {
+
+        let layersCount = Object.keys(this.layers).length
+
+        let layer = this.layers[layersCount]
+
+        layer = new Layer({
+            perceptrons: opts.perceptrons
+        })
+    }
+    getPerceptrons() {
+
+        let perceptrons = []
+
+        for (let layerName in this.layers) {
+
+            let layer = this.layers[layerName]
+
+            for (let perceptronName in layer) {
+
+                let perceptron = layer[perceptronName]
+
+                perceptrons.push(perceptron)
+            }
+        }
+
+        return perceptrons
+    }
+    train() {
 
 
     }
-}
+    run() {
 
-class Perceptron {
-    constructor(opts) {
+        let perceptrons = this.getPerceptrons()
 
+        for (let perceptron of perceptrons) perceptron.run()
+    }
+    learn() {
 
+        let perceptrons = this.getPerceptrons()
+
+        for (let perceptron of perceptrons) perceptron.learn()
     }
 }
 
