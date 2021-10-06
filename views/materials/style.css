@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
 body {
     margin: 0;
     padding: 0;
@@ -125,36 +124,44 @@ body {
 
 /* UI */
 
-.goalReachedParent {
-    padding: 20px;
-    font-size: 50px;
-    margin: auto;
-    position: fixed;
-    bottom: -10px;
-    left: 10px;
-    right: 10px;
-    background: black;
-    opacity: 0;
-    z-index: 1000;
-    justify-content: center;
+.UIParent {
+    color: black;
+    width: 200px;
+    margin: 10px;
+}
+
+.perceptronParent {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    text-align: center;
-    transition: all 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 12px 30px 0;
+    border-radius: 6px;
+    padding: 10px;
 }
 
-.goalReachedParentShow {
-    opacity: 1;
-    bottom: 10px;
+.perceptronParent:nth-child(odd) {
+    background: rgb(255, 255, 255);
 }
 
-.uiParent {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
+.perceptronParent:nth-child(even) {
+    background: rgb(170, 170, 170);
 }
 
-.uiHeader {}
+.perceptronTitle {
+    width: 100%;
+    font-size: 20px;
+}
+
+.perceptronHeader {
+    width: fit-content;
+    font-size: 16px;
+    width: 50%;
+}
+
+.perceptronContent {
+    width: 50%;
+    text-align: left;
+}
 
 
 /* Game */

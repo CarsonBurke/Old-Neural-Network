@@ -245,6 +245,8 @@ class NeuralNetwork {
                 })
             }
         }
+
+        this.UI()
     }
     learn() {
 
@@ -253,6 +255,89 @@ class NeuralNetwork {
         let perceptrons = this.getPerceptrons()
 
         for (let perceptron of perceptrons) perceptron.learn()
+    }
+    UI() {
+
+        // Loop through each layer in the network
+
+        for (let layerName in this.layers) {
+
+            let layer = this.layers[layerName]
+
+            // loop through each perceptron in the layer
+
+            for (let perceptronName in layer.perceptrons) {
+
+                let perceptron = layer.perceptrons[perceptronName]
+
+                // Values to display
+
+                let displayValues = {
+                    inputs: perceptron.inputs,
+                    weights: perceptron.weights,
+                    transfer: perceptron.transferValue,
+                    activate: perceptron.activateValue,
+                }
+
+                // If no elements create them
+
+                if (!perceptron.parentEl) {
+
+                    let UIParent = document.getElementById("UIParent")
+
+                    //
+
+                    perceptron.parentEl = document.createElement("div")
+
+                    perceptron.parentEl.classList.add("perceptronParent")
+
+                    UIParent.appendChild(perceptron.parentEl)
+
+                    //
+
+                    perceptron.titleEl = document.createElement("div")
+
+                    perceptron.titleEl.classList.add("perceptronTitle")
+
+                    perceptron.titleEl.innerText = "Name: " + perceptronName
+
+                    perceptron.parentEl.appendChild(perceptron.titleEl)
+
+                    for (let valueName in displayValues) {
+
+                        let value = displayValues[valueName]
+
+                        perceptron.headerEls = {}
+                        perceptron.contentEls = {}
+
+                        perceptron.headerEls[valueName] = document.createElement("h3")
+
+                        perceptron.headerEls[valueName].classList.add("perceptronHeader")
+
+                        perceptron.headerEls[valueName].innerText = valueName + ":"
+
+                        perceptron.parentEl.appendChild(perceptron.headerEls[valueName])
+
+                        //
+
+                        perceptron.contentEls[valueName] = document.createElement("strong")
+
+                        perceptron.contentEls[valueName].classList.add("perceptronContent")
+
+                        perceptron.parentEl.appendChild(perceptron.contentEls[valueName])
+                    }
+                }
+
+                for (let valueName in displayValues) {
+
+                    let value = displayValues[valueName]
+
+                    perceptron.contentEls.activate.innerText = value
+
+                    perceptron.contentEls[valueName].innerText = value
+                }
+            }
+        }
     }
 }
 

@@ -4,8 +4,6 @@ let network = new NeuralNetwork()
 
 network.addLayer({})
 
-/* console.log(network.layers) */
-
 let layer1 = network.layers[0]
 
 layer1.addPerceptron()
