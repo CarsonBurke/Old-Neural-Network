@@ -15,7 +15,7 @@ let layer1 = network.layers[0]
 layer1.addPerceptron()
 layer1.addPerceptron()
 
-/* // New layer
+// New layer
 
 network.addLayer({})
 
@@ -25,7 +25,17 @@ let layer2 = network.layers[1]
 
 layer2.addPerceptron()
 
-// Run neural network */
+// New layer
+
+network.addLayer({})
+
+let layer3 = network.layers[2]
+
+// Add perceptrons
+
+layer3.addPerceptron()
+
+// Run neural network
 
 setInterval(function() {
 

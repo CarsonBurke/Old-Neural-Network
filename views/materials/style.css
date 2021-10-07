@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "poppins", "sans-serif";
-    overflow-x: hidden;
+    overflow-x: scroll;
     overflow-y: scroll;
     --primary: rgb(5, 228, 5);
     --primaryShade: rgb(66, 66, 66);
@@ -126,7 +126,7 @@ body {
 
 .UIParent {
     color: black;
-    width: 50%;
+    width: 300px;
 }
 
 .perceptronParent {

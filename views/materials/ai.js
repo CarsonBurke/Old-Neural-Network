@@ -132,11 +132,11 @@ class Perceptron {
 
         this.activate()
 
-        console.log((this.activateValue).toFixed(2))
+        /* console.log((this.activateValue).toFixed(2)) */
     }
     learn() {
 
-        console.log("Learned")
+        /* console.log("Learned") */
 
         this.mutateWeights()
     }
@@ -209,6 +209,8 @@ class NeuralNetwork {
 
         function findInputs(layerName, perceptronName) {
 
+            console.log(layerName + ", " + perceptronName)
+
             let newInputs = []
 
             // If in first layer
@@ -226,9 +228,24 @@ class NeuralNetwork {
                 return newInputs
             }
 
+            console.log("---")
+
             // Otherwise give inputs from the previous layers' outputs
 
+            let newLayers = []
 
+            let previousLayer = network.layers[layerName - 1]
+
+            // loop through each perceptron in the layer
+
+            for (let perceptronName in previousLayer.perceptrons) {
+
+                let perceptron = previousLayer.perceptrons[perceptronName]
+
+                newLayers.push(perceptron.activateValue)
+            }
+
+            return newLayers
         }
 
         // Loop through each layer in the network
@@ -318,9 +335,12 @@ class NeuralNetwork {
 
                         let value = displayValues[valueName]
 
+                        //
 
                         perceptron.headerEls = {}
                         perceptron.contentEls = {}
+
+                        //
 
                         perceptron.headerEls[valueName] = document.createElement("h3")
 
@@ -336,7 +356,7 @@ class NeuralNetwork {
 
                         perceptron.contentEls[valueName].classList.add("perceptronContent")
 
-                        perceptron.contentEls[valueName].id = valueName + perceptronName
+                        perceptron.contentEls[valueName].id = valueName + layerName + perceptronName
 
                         perceptron.parentEl.appendChild(perceptron.contentEls[valueName])
                     }
@@ -399,7 +419,7 @@ class NeuralNetwork {
 
                     let value = displayValues[valueName]
 
-                    let el = document.getElementById(valueName + perceptronName)
+                    let el = document.getElementById(valueName + layerName + perceptronName)
 
                     el.innerText = structureValue(value)
                 }
