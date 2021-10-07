@@ -124,8 +124,6 @@ class Perceptron {
 
         this.inputs = opts.inputs
 
-        this.inputs.push(this.bias)
-
         // Run commands to take inputs into an end result
 
         this.applyWeights()
@@ -207,13 +205,25 @@ class NeuralNetwork {
     }
     run(opts) {
 
+        let network = this
+
         function findInputs(layerName, perceptronName) {
 
-            // If in first layer give default inputs
+            let newInputs = []
+
+            // If in first layer
 
             if (layerName == 0) {
 
-                return opts.inputs
+                // Add values from default inputs
+
+                for (let number of opts.inputs) newInputs.push(number)
+
+                // Add bias
+
+                newInputs.push(network.bias)
+
+                return newInputs
             }
 
             // Otherwise give inputs from the previous layers' outputs
