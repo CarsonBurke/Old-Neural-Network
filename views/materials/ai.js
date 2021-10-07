@@ -308,6 +308,7 @@ class NeuralNetwork {
 
                         let value = displayValues[valueName]
 
+
                         perceptron.headerEls = {}
                         perceptron.contentEls = {}
 
@@ -331,6 +332,19 @@ class NeuralNetwork {
                     }
                 }
 
+                Number.prototype.countDecimals = function() {
+
+                    if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+
+                    var str = this.toString();
+                    if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
+                        return str.split("-")[1] || 0;
+                    } else if (str.indexOf(".") !== -1) {
+                        return str.split(".")[1].length || 0;
+                    }
+                    return str.split("-")[1] || 0;
+                }
+
                 function structureValue(value) {
 
                     if (typeof value == "object") {
@@ -339,13 +353,26 @@ class NeuralNetwork {
 
                         for (let number of value) {
 
-                            newValue.push(" " + number.toFixed(2))
+                            // Check if we need to fix the number
+
+                            if (number.countDecimals() > 2) {
+
+                                newValue.push(" " + number.toFixed(2))
+                                continue
+                            }
+
+                            newValue.push(" " + number)
                         }
 
                         return newValue
                     }
 
-                    return value.toFixed(2)
+                    if (value.countDecimals() > 2) {
+
+                        return value.toFixed(2)
+                    }
+
+                    return value
                 }
 
                 for (let valueName in displayValues) {
