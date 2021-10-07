@@ -209,8 +209,6 @@ class NeuralNetwork {
 
         function findInputs(layerName, perceptronName) {
 
-            console.log(layerName + ", " + perceptronName)
-
             let newInputs = []
 
             // If in first layer
@@ -227,8 +225,6 @@ class NeuralNetwork {
 
                 return newInputs
             }
-
-            console.log("---")
 
             // Otherwise give inputs from the previous layers' outputs
 
@@ -425,6 +421,26 @@ class NeuralNetwork {
                 }
             }
         }
+    }
+    drawLine() {
+
+
+    }
+    drawVisuals() {
+
+        if (!this.visualsParent) {
+
+            let visualsParent = document.createElement("div")
+
+            visualsParent.classList.add("visualsParent")
+
+            visualsParent.style.width = Object.keys(this.layers).length * 100 + "px"
+
+            document.body.appendChild(visualsParent)
+            this.visualsParent = visualsParent
+        }
+
+
     }
 }
 

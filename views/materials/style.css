@@ -160,6 +160,15 @@ body {
     padding: 5px 10px;
 }
 
+.visualsParent {
+    height: 200px;
+    background: whitesmoke;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.18) 0 0 40px 0;
+}
+
 
 /* Game */
 

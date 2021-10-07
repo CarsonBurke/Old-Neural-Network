@@ -42,6 +42,8 @@ setInterval(function() {
     network.run({
         inputs: [1, 5]
     })
+
+    network.drawVisuals()
 }, 200)
 
 // Mutate neural network
