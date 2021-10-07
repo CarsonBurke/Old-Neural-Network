@@ -332,6 +332,8 @@ class NeuralNetwork {
                     }
                 }
 
+                // Find the number of decimals in a number
+
                 Number.prototype.countDecimals = function() {
 
                     if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
@@ -347,6 +349,8 @@ class NeuralNetwork {
 
                 function structureValue(value) {
 
+                    // Check if value is an array
+
                     if (typeof value == "object") {
 
                         let newValue = []
@@ -355,11 +359,13 @@ class NeuralNetwork {
 
                             // Check if we need to fix the number
 
-                            if (number.countDecimals() > 2) {
+                            if (Math.abs(number).countDecimals() > 2) {
 
                                 newValue.push(" " + number.toFixed(2))
                                 continue
                             }
+
+                            // Otherwise
 
                             newValue.push(" " + number)
                         }
@@ -367,10 +373,14 @@ class NeuralNetwork {
                         return newValue
                     }
 
-                    if (value.countDecimals() > 2) {
+                    // Check if we need to fix number
+
+                    if (Math.abs(value).countDecimals() > 2) {
 
                         return value.toFixed(2)
                     }
+
+                    // Otherwise return as is
 
                     return value
                 }
