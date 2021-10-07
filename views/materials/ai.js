@@ -300,7 +300,7 @@ class NeuralNetwork {
 
                     perceptron.titleEl.classList.add("perceptronTitle")
 
-                    perceptron.titleEl.innerText = "L: " + layerName + " P: " + perceptronName
+                    perceptron.titleEl.innerText = "Layer: " + layerName + " Perceptron: " + perceptronName
 
                     perceptron.parentEl.appendChild(perceptron.titleEl)
 

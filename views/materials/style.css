@@ -133,26 +133,31 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 12px 30px 0;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 6px 50px 0;
     border-radius: 6px;
-    padding: 10px;
+    overflow: hidden;
     margin: 10px;
 }
 
 .perceptronTitle {
     width: 100%;
     font-size: 20px;
+    text-align: center;
+    background: whitesmoke;
+    padding: 10px 0;
 }
 
 .perceptronHeader {
     width: fit-content;
     font-size: 16px;
     width: 50%;
+    padding: 5px 10px;
 }
 
 .perceptronContent {
     width: 50%;
     text-align: left;
+    padding: 5px 10px;
 }
 
 
