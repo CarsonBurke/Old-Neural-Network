@@ -126,8 +126,7 @@ body {
 
 .UIParent {
     color: black;
-    width: 200px;
-    margin: 10px;
+    width: 50%;
 }
 
 .perceptronParent {
@@ -137,14 +136,7 @@ body {
     box-shadow: rgba(0, 0, 0, 0.2) 0 12px 30px 0;
     border-radius: 6px;
     padding: 10px;
-}
-
-.perceptronParent:nth-child(odd) {
-    background: rgb(255, 255, 255);
-}
-
-.perceptronParent:nth-child(even) {
-    background: rgb(170, 170, 170);
+    margin: 10px;
 }
 
 .perceptronTitle {

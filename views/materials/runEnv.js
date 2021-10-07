@@ -7,6 +7,7 @@ network.addLayer({})
 let layer1 = network.layers[0]
 
 layer1.addPerceptron()
+layer1.addPerceptron()
 
 setInterval(function() {
 

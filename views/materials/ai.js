@@ -331,13 +331,30 @@ class NeuralNetwork {
                     }
                 }
 
+                function structureValue(value) {
+
+                    if (typeof value == "object") {
+
+                        let newValue = []
+
+                        for (let number of value) {
+
+                            newValue.push(" " + number.toFixed(2))
+                        }
+
+                        return newValue
+                    }
+
+                    return value.toFixed(2)
+                }
+
                 for (let valueName in displayValues) {
 
                     let value = displayValues[valueName]
 
                     let el = document.getElementById(valueName + perceptronName)
 
-                    el.innerText = value
+                    el.innerText = structureValue(value)
                 }
             }
         }
