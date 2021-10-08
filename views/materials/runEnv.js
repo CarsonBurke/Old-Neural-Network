@@ -1,4 +1,4 @@
-import { NeuralNetwork } from "./ai.js"
+import { NeuralNetwork } from "./neuralNetwork.js"
 
 // Create neural network
 
@@ -6,9 +6,8 @@ let network = new NeuralNetwork()
 
 //
 
-let inputs = [
-    [1, 5]
-]
+let inputs =  [1, 5, 6]
+
 
 // Create layers
 
@@ -20,7 +19,7 @@ for (let i = 0; i < layerCount; i++) network.addLayer({})
 
 // Create input perceptrons
 
-for (let i = 0; i < inputs.length; i++) network.layers[0].addPerceptrons(inputs.length)
+network.layers[0].addPerceptrons(inputs.length)
 
 // Create hidden perceptrons
 
@@ -64,4 +63,4 @@ setInterval(function() {
 setInterval(function() {
 
     network.learn()
-}, 1000)
+}, 200)

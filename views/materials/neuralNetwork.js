@@ -282,7 +282,7 @@ class NeuralNetwork {
             }
         }
 
-        /* this.UI() */
+        this.UI()
         this.updateVisuals()
     }
     learn() {

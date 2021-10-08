@@ -161,7 +161,7 @@ body {
 }
 
 .visualsParent {
-    background: whitesmoke;
+    background: rgb(255, 255, 255);
     position: fixed;
     right: 10px;
     top: 10px;
@@ -179,11 +179,15 @@ body {
 
 .perceptronVisual {
     background: rgb(28, 238, 0);
-    box-shadow: rgba(0, 0, 0, 0.2) 0 0 8px 0, black 0 0 0 1.5px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 20px 0, black 0 0 0 1.5px;
     border-radius: 100%;
     width: 70px;
     height: 70px;
     margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
 }
 
 .inputPerceptron {
@@ -205,7 +209,7 @@ body {
 
 .line {
     stroke: black;
-    stroke-width: 2.5px;
+    stroke-width: 1.5px;
 }
 
 
