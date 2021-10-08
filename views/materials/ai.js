@@ -513,18 +513,18 @@ class NeuralNetwork {
 
         // Create line
 
-        let x1 = perceptron1.visual.getBoundingClientRect().top
-        let y1 = perceptron1.visual.getBoundingClientRect().left
+        let x1 = perceptron1.visual.getBoundingClientRect().left
+        let y1 = perceptron1.visual.getBoundingClientRect().top
 
-        let x2 = perceptron2.visual.getBoundingClientRect().top
-        let y2 = perceptron2.visual.getBoundingClientRect().left
+        let x2 = perceptron2.visual.getBoundingClientRect().left
+        let y2 = perceptron2.visual.getBoundingClientRect().top
 
         let line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
 
-        line.setAttribute('x1', x1)
-        line.setAttribute('y1', y1)
-        line.setAttribute('x2', x2)
-        line.setAttribute('y2', y2)
+        line.setAttribute('x1', x1 + perceptron1.visual.offsetWidth / 2 - this.visualsParent.getBoundingClientRect().left)
+        line.setAttribute('y1', y1 + perceptron1.visual.offsetHeight / 2 - this.visualsParent.getBoundingClientRect().top)
+        line.setAttribute('x2', x2 + perceptron2.visual.offsetWidth / 2 - this.visualsParent.getBoundingClientRect().left)
+        line.setAttribute('y2', y2 + perceptron2.visual.offsetHeight / 2 - this.visualsParent.getBoundingClientRect().top)
 
         line.classList.add("line")
 

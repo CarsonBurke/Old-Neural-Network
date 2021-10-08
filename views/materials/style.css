@@ -183,7 +183,7 @@ body {
     border-radius: 100%;
     width: 70px;
     height: 70px;
-    margin: 8px 0;
+    margin: 20px 0;
 }
 
 .inputPerceptron {
@@ -205,7 +205,7 @@ body {
 
 .line {
     stroke: black;
-    stroke-width: 2px;
+    stroke-width: 2.5px;
 }
 
 
