@@ -444,7 +444,7 @@ class NeuralNetwork {
 
         visualsParent.classList.add("visualsParent")
 
-        visualsParent.style.width = Object.keys(this.layers).length * 100 + "px"
+        visualsParent.style.width = Object.keys(this.layers).length * 150 + "px"
 
         document.body.appendChild(visualsParent)
         this.visualsParent = visualsParent
