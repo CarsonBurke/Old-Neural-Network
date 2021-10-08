@@ -171,18 +171,20 @@ body {
 
 .layerVisual {
     border: 2px solid white;
-    height: 100%;
     width: 100px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 .perceptronVisual {
-    background: white;
+    background: rgb(28, 238, 0);
+    border: black 2px solid;
     border-radius: 100%;
     width: 80px;
     height: 80px;
-    margin: 8px;
+    margin: 8px 0;
 }
 
 

@@ -442,9 +442,17 @@ class NeuralNetwork {
 
         if (!this.layerVisuals) {
 
+            //
+
             this.layerVisuals = {}
 
             for (let layerName in this.layers) {
+
+                //
+
+                this.perceptronVisuals = {
+                    [layerName]: {}
+                }
 
                 // Create visuals for the layer
 
@@ -459,7 +467,9 @@ class NeuralNetwork {
 
                 let layer = this.layers[layerName]
 
-                for (let perceptronName in layer) {
+                for (let perceptronName in layer.perceptrons) {
+
+                    console.log(layerName)
 
                     // Create visuals for the perceptron
 
@@ -468,6 +478,7 @@ class NeuralNetwork {
                     perceptronVisual.classList.add("perceptronVisual")
 
                     this.layerVisuals[layerName].appendChild(perceptronVisual)
+                    this.perceptronVisuals[layerName][perceptronName] = perceptronVisual
                 }
             }
         }
