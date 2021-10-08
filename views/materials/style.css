@@ -161,12 +161,28 @@ body {
 }
 
 .visualsParent {
-    height: 200px;
     background: whitesmoke;
     position: fixed;
     right: 10px;
     top: 10px;
     box-shadow: rgba(0, 0, 0, 0.18) 0 0 40px 0;
+    display: flex;
+}
+
+.layerVisual {
+    border: 2px solid white;
+    height: 100%;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.perceptronVisual {
+    background: white;
+    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    margin: 8px;
 }
 
 
@@ -215,6 +231,9 @@ body {
     box-shadow: rgba(0, 0, 0, 0.15) 0 0 10px 0;
     transition: all 0.1s;
 }
+
+
+/*  */
 
 
 /*  */

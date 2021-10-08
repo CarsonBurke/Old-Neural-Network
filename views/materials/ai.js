@@ -440,7 +440,37 @@ class NeuralNetwork {
             this.visualsParent = visualsParent
         }
 
+        if (!this.layerVisuals) {
 
+            this.layerVisuals = {}
+
+            for (let layerName in this.layers) {
+
+                // Create visuals for the layer
+
+                let layerVisual = document.createElement("div")
+
+                layerVisual.classList.add("layerVisual")
+
+                this.visualsParent.appendChild(layerVisual)
+                this.layerVisuals[layerName] = layerVisual
+
+                // loop through perceptrons in the layer
+
+                let layer = this.layers[layerName]
+
+                for (let perceptronName in layer) {
+
+                    // Create visuals for the perceptron
+
+                    let perceptronVisual = document.createElement("div")
+
+                    perceptronVisual.classList.add("perceptronVisual")
+
+                    this.layerVisuals[layerName].appendChild(perceptronVisual)
+                }
+            }
+        }
     }
 }
 
