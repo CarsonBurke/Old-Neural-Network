@@ -549,6 +549,8 @@ class NeuralNetwork {
 
                 let perceptron = layer.perceptrons[perceptronName]
 
+                perceptron.visual.innerText = (perceptron.activateValue).toFixed(2)
+
                 if (Object.keys(perceptron.lines).length >= 1) {
 
                     /*                     for (let lineName in perceptron.lines) {
