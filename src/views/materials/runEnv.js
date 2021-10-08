@@ -6,12 +6,12 @@ let network = new NeuralNetwork()
 
 //
 
-let inputs =  [1, 5, 6]
+let inputs = [1, 5, 6]
 
 
 // Create layers
 
-let layerCount = 4
+let layerCount = 3
 
 for (let i = 0; i < layerCount; i++) network.addLayer({})
 

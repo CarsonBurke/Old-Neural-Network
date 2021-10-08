@@ -211,8 +211,12 @@ body {
 }
 
 .line {
-    stroke: black;
+    stroke: rgba(0, 0, 0, 0.75);
     stroke-width: 1.5px;
+}
+
+.lineConnection {
+    stroke: rgba(14, 81, 226, 0.75);
 }
 
 

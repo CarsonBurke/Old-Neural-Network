@@ -20,9 +20,9 @@ app.get('/', async function(req, res) {
     res.render(__dirname + "/views/index.ejs")
 })
 
-app.get('/game', async function(req, res) {
+app.get('/environment', async function(req, res) {
 
-    res.render(__dirname + "/views/game.ejs")
+    res.render(__dirname + "/views/environment.ejs")
 })
 
 app.listen(5201)

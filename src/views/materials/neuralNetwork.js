@@ -142,12 +142,8 @@ class Perceptron {
         this.transfer()
 
         this.activate()
-
-        /* console.log((this.activateValue).toFixed(2)) */
     }
     learn() {
-
-        /* console.log("Learned") */
 
         this.mutateWeights()
     }
@@ -533,9 +529,14 @@ class NeuralNetwork {
         this.svg.appendChild(line)
         perceptron1.lines[perceptron2Name] = line
     }
-    updateLine() {
+    updateLine(perceptron1, perceptron2, perceptron2Name) {
 
+        let line = perceptron1.lines[perceptron2Name]
 
+        if (perceptron2.activateValue >= 1) {
+
+            line.classList.add("lineConnection")
+        } else line.classList.remove("lineConnection")
     }
     updateVisuals() {
 
@@ -549,17 +550,9 @@ class NeuralNetwork {
 
                 let perceptron = layer.perceptrons[perceptronName]
 
+                // Show perceptrons activateValue
+
                 perceptron.visual.innerText = (perceptron.activateValue).toFixed(2)
-
-                if (Object.keys(perceptron.lines).length >= 1) {
-
-                    /*                     for (let lineName in perceptron.lines) {
-
-                                            this.updateLine()
-                                        } */
-
-                    continue
-                }
 
                 // Find layer after this one
 
@@ -569,13 +562,24 @@ class NeuralNetwork {
 
                 // Loop through each perceptron in the next layer and draw a line
 
-                for (let secondPerceptronName in proceedingLayer.perceptrons) {
+                for (let perceptron2Name in proceedingLayer.perceptrons) {
 
-                    let secondPerceptron = proceedingLayer.perceptrons[secondPerceptronName]
+                    let perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
+
+                    // If line already exists update the line
+
+                    let perceptronsAmountInProceedingLayer = Object.keys(proceedingLayer.perceptrons).length
+
+                    if (Object.keys(perceptron.lines).length == perceptronsAmountInProceedingLayer) {
+
+                        this.updateLine(perceptron, perceptron2, perceptron2Name)
+
+                        continue
+                    }
 
                     //
 
-                    this.drawLine(perceptron, secondPerceptron, secondPerceptronName)
+                    this.drawLine(perceptron, perceptron2, perceptron2Name)
                 }
             }
         }
