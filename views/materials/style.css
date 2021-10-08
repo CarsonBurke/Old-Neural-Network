@@ -170,7 +170,6 @@ body {
 }
 
 .layerVisual {
-    border: 2px solid white;
     width: 100px;
     display: flex;
     flex-direction: column;
@@ -180,11 +179,19 @@ body {
 
 .perceptronVisual {
     background: rgb(28, 238, 0);
-    border: black 2px solid;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 8px 0, black 0 0 0 1.5px;
     border-radius: 100%;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     margin: 8px 0;
+}
+
+.inputPerceptron {
+    background: rgb(255, 187, 0);
+}
+
+.outputPerceptron {
+    background: rgb(250, 15, 15);
 }
 
 

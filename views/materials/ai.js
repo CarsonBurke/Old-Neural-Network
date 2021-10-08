@@ -477,6 +477,15 @@ class NeuralNetwork {
 
                     perceptronVisual.classList.add("perceptronVisual")
 
+                    if (layerName == 0) {
+
+                        perceptronVisual.classList.add("inputPerceptron")
+
+                    } else if (layerName == Object.keys(this.layers).length - 1) {
+
+                        perceptronVisual.classList.add("outputPerceptron")
+                    }
+
                     this.layerVisuals[layerName].appendChild(perceptronVisual)
                     this.perceptronVisuals[layerName][perceptronName] = perceptronVisual
                 }
