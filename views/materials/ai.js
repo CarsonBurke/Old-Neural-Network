@@ -8,6 +8,17 @@ class Layer {
 
         this.perceptrons = {}
     }
+    addPerceptrons(amount) {
+
+        let i = 0
+
+        while (i < amount) {
+
+            this.addPerceptron()
+
+            i++
+        }
+    }
     addPerceptron() {
 
         // Set the requested layer to have the requested inputs
@@ -207,7 +218,7 @@ class NeuralNetwork {
 
         let network = this
 
-        function findInputs(layerName, perceptronName) {
+        function findInputs(layerName) {
 
             let newInputs = []
 
@@ -258,7 +269,7 @@ class NeuralNetwork {
 
                 // Use the layer and perceptron location to idenify what inputs it should have
 
-                let inputs = findInputs(layerName, perceptronName)
+                let inputs = findInputs(layerName)
 
                 // Run the perceptron
 
@@ -269,7 +280,8 @@ class NeuralNetwork {
             }
         }
 
-        this.UI()
+        /* this.UI() */
+        this.updateVisuals()
     }
     learn() {
 
@@ -422,72 +434,144 @@ class NeuralNetwork {
             }
         }
     }
-    drawLine() {
-
-
-    }
     drawVisuals() {
 
-        if (!this.visualsParent) {
+        // Create visuals parent
 
-            let visualsParent = document.createElement("div")
+        let visualsParent = document.createElement("div")
 
-            visualsParent.classList.add("visualsParent")
+        visualsParent.classList.add("visualsParent")
 
-            visualsParent.style.width = Object.keys(this.layers).length * 100 + "px"
+        visualsParent.style.width = Object.keys(this.layers).length * 100 + "px"
 
-            document.body.appendChild(visualsParent)
-            this.visualsParent = visualsParent
-        }
+        document.body.appendChild(visualsParent)
+        this.visualsParent = visualsParent
 
-        if (!this.layerVisuals) {
+        // Create svg
 
-            //
+        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
-            this.layerVisuals = {}
+        svg.classList.add("lineParent")
 
-            for (let layerName in this.layers) {
+        this.visualsParent.appendChild(svg)
+        this.svg = svg
+
+        // Loop through each layer
+
+        for (let layerName in this.layers) {
+
+            let layer = this.layers[layerName]
+
+            // make sure there isn't already a visual
+
+            if (layer.visual) continue
+
+            // Create visuals for the layer
+
+            let layerVisual = document.createElement("div")
+
+            layerVisual.classList.add("layerVisual")
+
+            this.visualsParent.appendChild(layerVisual)
+            layer.visual = layerVisual
+
+            // loop through perceptrons in the layer
+
+            for (let perceptronName in layer.perceptrons) {
+
+                let perceptron = layer.perceptrons[perceptronName]
+
+                // Create visuals for the perceptron
+
+                let perceptronVisual = document.createElement("div")
+
+                perceptronVisual.classList.add("perceptronVisual")
+
+                // Colour first and last perceptrons
+
+                if (layerName == 0) {
+
+                    perceptronVisual.classList.add("inputPerceptron")
+
+                } else if (layerName == Object.keys(this.layers).length - 1) {
+
+                    perceptronVisual.classList.add("outputPerceptron")
+                }
 
                 //
 
-                this.perceptronVisuals = {
-                    [layerName]: {}
+                layer.visual.appendChild(perceptronVisual)
+                perceptron.visual = perceptronVisual
+
+                //
+
+                perceptron.lines = {}
+            }
+        }
+    }
+    drawLine(perceptron1, perceptron2, perceptron2Name) {
+
+        // Create line
+
+        let x1 = perceptron1.visual.getBoundingClientRect().top
+        let y1 = perceptron1.visual.getBoundingClientRect().left
+
+        let x2 = perceptron2.visual.getBoundingClientRect().top
+        let y2 = perceptron2.visual.getBoundingClientRect().left
+
+        let line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+
+        line.setAttribute('x1', x1)
+        line.setAttribute('y1', y1)
+        line.setAttribute('x2', x2)
+        line.setAttribute('y2', y2)
+
+        line.classList.add("line")
+
+        this.svg.appendChild(line)
+        perceptron1.lines[perceptron2Name] = line
+    }
+    updateLine() {
+
+
+    }
+    updateVisuals() {
+
+        for (let layerName in this.layers) {
+
+            let layer = this.layers[layerName]
+
+            // loop through perceptrons in the layer
+
+            for (let perceptronName in layer.perceptrons) {
+
+                let perceptron = layer.perceptrons[perceptronName]
+
+                if (Object.keys(perceptron.lines).length >= 1) {
+
+                    /*                     for (let lineName in perceptron.lines) {
+
+                                            this.updateLine()
+                                        } */
+
+                    continue
                 }
 
-                // Create visuals for the layer
+                // Find layer after this one
 
-                let layerVisual = document.createElement("div")
+                let proceedingLayer = this.layers[parseInt(layerName) + 1]
 
-                layerVisual.classList.add("layerVisual")
+                if (!proceedingLayer) continue
 
-                this.visualsParent.appendChild(layerVisual)
-                this.layerVisuals[layerName] = layerVisual
+                // Loop through each perceptron in the next layer and draw a line
 
-                // loop through perceptrons in the layer
+                for (let secondPerceptronName in proceedingLayer.perceptrons) {
 
-                let layer = this.layers[layerName]
+                    let secondPerceptron = proceedingLayer.perceptrons[secondPerceptronName]
 
-                for (let perceptronName in layer.perceptrons) {
+                    //
 
-                    console.log(layerName)
-
-                    // Create visuals for the perceptron
-
-                    let perceptronVisual = document.createElement("div")
-
-                    perceptronVisual.classList.add("perceptronVisual")
-
-                    if (layerName == 0) {
-
-                        perceptronVisual.classList.add("inputPerceptron")
-
-                    } else if (layerName == Object.keys(this.layers).length - 1) {
-
-                        perceptronVisual.classList.add("outputPerceptron")
-                    }
-
-                    this.layerVisuals[layerName].appendChild(perceptronVisual)
-                    this.perceptronVisuals[layerName][perceptronName] = perceptronVisual
+                    this.drawLine(perceptron, secondPerceptron, secondPerceptronName)
                 }
             }
         }
