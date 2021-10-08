@@ -4,66 +4,58 @@ import { NeuralNetwork } from "./ai.js"
 
 let network = new NeuralNetwork()
 
-// Create new layer
+//
 
-network.addLayer({})
+let inputs = [
+    [1, 5]
+]
 
-let layer1 = network.layers[0]
+// Create layers
 
-// Add perceptrons
+let layerCount = 4
 
-layer1.addPerceptrons(2)
+for (let i = 0; i < layerCount; i++) network.addLayer({})
 
-// New layer
+// Create perceptrons
 
-network.addLayer({})
+// Create input perceptrons
 
-let layer2 = network.layers[1]
+for (let i = 0; i < inputs.length; i++) network.layers[0].addPerceptrons(inputs.length)
 
-// Add perceptrons
+// Create hidden perceptrons
 
-layer2.addPerceptrons(3)
+let hiddenPerceptronsNeed = 4
 
-// New layer
+// Loop through layers
 
-network.addLayer({})
+for (let layerName in network.layers) {
 
-let layer3 = network.layers[2]
+    // Filter only hidden layers
 
-// Add perceptrons
+    let layersCount = Object.keys(network.layers).length
 
-layer3.addPerceptrons(3)
+    if (layerName > 0 && layerName < layersCount - 1) {
 
-// New layer
+        let layer = network.layers[layerName]
 
-network.addLayer({})
+        layer.addPerceptrons(hiddenPerceptronsNeed)
+    }
+}
 
-let layer4 = network.layers[3]
+// Create output perceptrons
 
-// Add perceptrons
-
-layer4.addPerceptrons(3)
-
-// New layer
-
-network.addLayer({})
-
-let layer5 = network.layers[4]
-
-// Add perceptrons
-
-layer5.addPerceptrons(1)
+network.layers[layerCount - 1].addPerceptrons(1)
 
 // Initialize neural network
 
-network.drawVisuals()
+network.config()
 
 // Run neural network
 
 setInterval(function() {
 
     network.run({
-        inputs: [1, 5]
+        inputs: inputs
     })
 }, 200)
 

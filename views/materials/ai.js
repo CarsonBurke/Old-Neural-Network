@@ -180,6 +180,8 @@ class NeuralNetwork {
         this.layers[layersCount] = new Layer({
             perceptrons: opts.perceptrons
         })
+
+        return this.layers[layersCount]
     }
     getPerceptrons() {
 
@@ -575,6 +577,10 @@ class NeuralNetwork {
                 }
             }
         }
+    }
+    config() {
+
+        this.drawVisuals()
     }
 }
 
