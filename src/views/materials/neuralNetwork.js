@@ -1,5 +1,5 @@
 let defaults = {
-    learningRate: 1,
+    learningRate: 0.7,
     bias: 1,
 }
 
@@ -278,7 +278,6 @@ class NeuralNetwork {
             }
         }
 
-        this.UI()
         this.updateVisuals()
     }
     learn() {
@@ -288,6 +287,8 @@ class NeuralNetwork {
         let perceptrons = this.getPerceptrons()
 
         for (let perceptron of perceptrons) perceptron.learn()
+
+        return this
     }
     UI() {
 
@@ -434,13 +435,15 @@ class NeuralNetwork {
     }
     drawVisuals() {
 
+        if (this.visualsParent) return
+
         // Create visuals parent
 
         let visualsParent = document.createElement("div")
 
         visualsParent.classList.add("visualsParent")
 
-        visualsParent.style.width = Object.keys(this.layers).length * 150 + "px"
+        visualsParent.style.width = Object.keys(this.layers).length * 80 + "px"
 
         document.body.appendChild(visualsParent)
         this.visualsParent = visualsParent
@@ -533,7 +536,7 @@ class NeuralNetwork {
 
         let line = perceptron1.lines[perceptron2Name]
 
-        if (perceptron2.activateValue >= 1) {
+        if (perceptron2.activateValue > 0) {
 
             line.classList.add("lineConnection")
         } else line.classList.remove("lineConnection")

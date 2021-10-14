@@ -7,7 +7,7 @@ let network = new NeuralNetwork()
 //
 
 let inputs = [1, 5, 6]
-
+let outputCount = 2
 
 // Create layers
 
@@ -43,7 +43,7 @@ for (let layerName in network.layers) {
 
 // Create output perceptrons
 
-network.layers[layerCount - 1].addPerceptrons(1)
+network.layers[layerCount - 1].addPerceptrons(outputCount)
 
 // Initialize neural network
 
