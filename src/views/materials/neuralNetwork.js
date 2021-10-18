@@ -3,35 +3,35 @@ let defaults = {
     bias: 1,
 }
 
-class Layer {
-    constructor() {
+class Line {
+    constructor(opts) {
 
-        this.perceptrons = {}
-    }
-    addPerceptrons(amount) {
+        // Assign opts
 
-        let i = 0
+        for (let propertyName in opts) {
 
-        while (i < amount) {
-
-            this.addPerceptron()
-
-            i++
+            this[propertyName] = opts[propertyName]
         }
-    }
-    addPerceptron() {
 
-        // Set the requested layer to have the requested inputs
+        // Create element
 
-        let layer = this
+        let x1 = this.perceptron1.visual.getBoundingClientRect().left
+        let y1 = this.perceptron1.visual.getBoundingClientRect().top
 
-        // Find number of perceptrons in this layer
+        let x2 = this.perceptron2.visual.getBoundingClientRect().left
+        let y2 = this.perceptron2.visual.getBoundingClientRect().top
 
-        let perceptronCount = Object.keys(layer.perceptrons).length
+        let el = document.createElementNS('http://www.w3.org/2000/svg', 'line')
 
-        // Create and add new perceptron to the layer
+        el.setAttribute('x1', x1 + this.perceptron1.visual.offsetWidth / 2 - this.network.visualsParent.getBoundingClientRect().left)
+        el.setAttribute('y1', y1 + this.perceptron1.visual.offsetHeight / 2 - this.network.visualsParent.getBoundingClientRect().top)
+        el.setAttribute('x2', x2 + this.perceptron2.visual.offsetWidth / 2 - this.network.visualsParent.getBoundingClientRect().left)
+        el.setAttribute('y2', y2 + this.perceptron2.visual.offsetHeight / 2 - this.network.visualsParent.getBoundingClientRect().top)
 
-        layer.perceptrons[perceptronCount] = new Perceptron()
+        el.classList.add("line")
+
+        this.network.svg.appendChild(el)
+        this.el = el
     }
 }
 
@@ -149,6 +149,38 @@ class Perceptron {
     }
 }
 
+class Layer {
+    constructor() {
+
+        this.perceptrons = {}
+    }
+    addPerceptrons(amount) {
+
+        let i = 0
+
+        while (i < amount) {
+
+            this.addPerceptron()
+
+            i++
+        }
+    }
+    addPerceptron() {
+
+        // Set the requested layer to have the requested inputs
+
+        let layer = this
+
+        // Find number of perceptrons in this layer
+
+        let perceptronCount = Object.keys(layer.perceptrons).length
+
+        // Create and add new perceptron to the layer
+
+        layer.perceptrons[perceptronCount] = new Perceptron()
+    }
+}
+
 class NeuralNetwork {
     constructor(opts) {
 
@@ -200,6 +232,39 @@ class NeuralNetwork {
     train() {
 
 
+    }
+    forwardPropagate() {
+
+        /* // Loop through layers
+
+        for (let layerName in this.layers) {
+
+            let layer = this.layers[layerName]
+
+            // Loop through perceptrons in the layer
+
+            for (let lineName in perceptron.lines) {
+
+                let line = perceptron.lines[lineName]
+
+                // Find layer after this one
+
+                let proceedingLayer = this.layers[parseInt(layerName) + 1]
+
+                // Stop if there is no proceedingLayer
+
+                if (!proceedingLayer) continue
+
+                // Loop through each perceptron in the next layer
+
+                for (let perceptron2Name in proceedingLayer.perceptrons) {
+
+                    let perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
+
+
+                }
+            }
+        } */
     }
     getImportantValues() {
 
@@ -288,150 +353,7 @@ class NeuralNetwork {
 
         return this
     }
-    UI() {
-
-        // Loop through each layer in the network
-
-        for (let layerName in this.layers) {
-
-            let layer = this.layers[layerName]
-
-            // loop through each perceptron in the layer
-
-            for (let perceptronName in layer.perceptrons) {
-
-                let perceptron = layer.perceptrons[perceptronName]
-
-                // Values to display
-
-                let displayValues = {
-                    inputs: perceptron.inputs,
-                    weights: perceptron.weights,
-                    weightResults: perceptron.weightResults,
-                    transfer: perceptron.transferValue,
-                    activate: perceptron.activateValue,
-                }
-
-                // If no elements create them
-
-                if (!perceptron.parentEl) {
-
-                    let UIParent = document.getElementById("UIParent")
-
-                    //
-
-                    perceptron.parentEl = document.createElement("div")
-
-                    perceptron.parentEl.classList.add("perceptronParent")
-
-                    UIParent.appendChild(perceptron.parentEl)
-
-                    //
-
-                    perceptron.titleEl = document.createElement("div")
-
-                    perceptron.titleEl.classList.add("perceptronTitle")
-
-                    perceptron.titleEl.innerText = "Layer: " + layerName + " Perceptron: " + perceptronName
-
-                    perceptron.parentEl.appendChild(perceptron.titleEl)
-
-                    for (let valueName in displayValues) {
-
-                        let value = displayValues[valueName]
-
-                        //
-
-                        perceptron.headerEls = {}
-                        perceptron.contentEls = {}
-
-                        //
-
-                        perceptron.headerEls[valueName] = document.createElement("h3")
-
-                        perceptron.headerEls[valueName].classList.add("perceptronHeader")
-
-                        perceptron.headerEls[valueName].innerText = valueName + ":"
-
-                        perceptron.parentEl.appendChild(perceptron.headerEls[valueName])
-
-                        //
-
-                        perceptron.contentEls[valueName] = document.createElement("strong")
-
-                        perceptron.contentEls[valueName].classList.add("perceptronContent")
-
-                        perceptron.contentEls[valueName].id = valueName + layerName + perceptronName
-
-                        perceptron.parentEl.appendChild(perceptron.contentEls[valueName])
-                    }
-                }
-
-                // Find the number of decimals in a number
-
-                Number.prototype.countDecimals = function() {
-
-                    if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-
-                    var str = this.toString();
-                    if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
-                        return str.split("-")[1] || 0;
-                    } else if (str.indexOf(".") !== -1) {
-                        return str.split(".")[1].length || 0;
-                    }
-                    return str.split("-")[1] || 0;
-                }
-
-                function structureValue(value) {
-
-                    // Check if value is an array
-
-                    if (typeof value == "object") {
-
-                        let newValue = []
-
-                        for (let number of value) {
-
-                            // Check if we need to fix the number
-
-                            if (Math.abs(number).countDecimals() > 2) {
-
-                                newValue.push(" " + number.toFixed(2))
-                                continue
-                            }
-
-                            // Otherwise
-
-                            newValue.push(" " + number)
-                        }
-
-                        return newValue
-                    }
-
-                    // Check if we need to fix number
-
-                    if (Math.abs(value).countDecimals() > 2) {
-
-                        return value.toFixed(2)
-                    }
-
-                    // Otherwise return as is
-
-                    return value
-                }
-
-                for (let valueName in displayValues) {
-
-                    let value = displayValues[valueName]
-
-                    let el = document.getElementById(valueName + layerName + perceptronName)
-
-                    el.innerText = structureValue(value)
-                }
-            }
-        }
-    }
-    drawVisuals() {
+    createVisuals() {
 
         if (this.visualsParent) return
 
@@ -476,9 +398,9 @@ class NeuralNetwork {
 
             // loop through perceptrons in the layer
 
-            for (let perceptronName in layer.perceptrons) {
+            for (let perceptron1Name in layer.perceptrons) {
 
-                let perceptron = layer.perceptrons[perceptronName]
+                let perceptron1 = layer.perceptrons[perceptron1Name]
 
                 // Create visuals for the perceptron
 
@@ -500,46 +422,17 @@ class NeuralNetwork {
                 //
 
                 layer.visual.appendChild(perceptronVisual)
-                perceptron.visual = perceptronVisual
+                perceptron1.visual = perceptronVisual
 
                 //
 
-                perceptron.lines = {}
+                layer.lines = {}
             }
         }
+
+        this.createLines()
     }
-    drawLine(perceptron1, perceptron2, perceptron2Name) {
-
-        // Create line
-
-        let x1 = perceptron1.visual.getBoundingClientRect().left
-        let y1 = perceptron1.visual.getBoundingClientRect().top
-
-        let x2 = perceptron2.visual.getBoundingClientRect().left
-        let y2 = perceptron2.visual.getBoundingClientRect().top
-
-        let line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
-
-        line.setAttribute('x1', x1 + perceptron1.visual.offsetWidth / 2 - this.visualsParent.getBoundingClientRect().left)
-        line.setAttribute('y1', y1 + perceptron1.visual.offsetHeight / 2 - this.visualsParent.getBoundingClientRect().top)
-        line.setAttribute('x2', x2 + perceptron2.visual.offsetWidth / 2 - this.visualsParent.getBoundingClientRect().left)
-        line.setAttribute('y2', y2 + perceptron2.visual.offsetHeight / 2 - this.visualsParent.getBoundingClientRect().top)
-
-        line.classList.add("line")
-
-        this.svg.appendChild(line)
-        perceptron1.lines[perceptron2Name] = line
-    }
-    updateLine(perceptron1, perceptron2Name) {
-
-        let line = perceptron1.lines[perceptron2Name]
-
-        if (perceptron1.activateValue > 0) {
-
-            line.classList.add("lineConnection")
-        } else line.classList.remove("lineConnection")
-    }
-    updateVisuals() {
+    createLines() {
 
         for (let layerName in this.layers) {
 
@@ -547,13 +440,9 @@ class NeuralNetwork {
 
             // loop through perceptrons in the layer
 
-            for (let perceptronName in layer.perceptrons) {
+            for (let perceptron1Name in layer.perceptrons) {
 
-                let perceptron = layer.perceptrons[perceptronName]
-
-                // Show perceptrons activateValue
-
-                perceptron.visual.innerText = (perceptron.activateValue).toFixed(2)
+                let perceptron1 = layer.perceptrons[perceptron1Name]
 
                 // Find layer after this one
 
@@ -567,27 +456,86 @@ class NeuralNetwork {
 
                     let perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
 
-                    // If line already exists update the line
+                    let perceptronCount = Object.keys(layer.perceptrons).length
 
-                    let perceptronsAmountInProceedingLayer = Object.keys(proceedingLayer.perceptrons).length
+                    layer.lines[perceptron1Name * perceptronCount + perceptron2Name] = new Line({
+                        network: this,
+                        perceptron1: perceptron1,
+                        perceptron2: perceptron2
+                    })
 
-                    if (Object.keys(perceptron.lines).length == perceptronsAmountInProceedingLayer) {
+                    let line = layer.lines[perceptron1Name * perceptronCount + perceptron2Name]
 
-                        this.updateLine(perceptron, perceptron2Name)
+                    this.mutateLine(layer, line)
+                }
+            }
+        }
+    }
+    updateLine(layer, perceptron1Name, perceptron2Name) {
 
-                        continue
-                    }
+        let perceptronCount = Object.keys(layer.perceptrons).length
 
-                    //
+        let el = layer.lines[perceptron1Name * perceptronCount + perceptron2Name].el
 
-                    this.drawLine(perceptron, perceptron2, perceptron2Name)
+        if (layer.perceptrons[perceptron1Name].activateValue > 0) {
+
+            el.classList.add("lineConnection")
+        } else el.classList.remove("lineConnection")
+    }
+    mutateLine(layer, line) {
+
+        // Get random value influenced by learning rate
+
+        let value = Math.random() * 5 / this.learningRate
+
+        // Stop if value is more than 1
+
+        if (value > 1) return
+
+        // Remove line el
+
+        line.el.remove()
+
+        // Delete line
+
+        delete layer[line]
+    }
+    updateVisuals() {
+
+        for (let layerName in this.layers) {
+
+            let layer = this.layers[layerName]
+
+            // loop through perceptrons in the layer
+
+            for (let perceptron1Name in layer.perceptrons) {
+
+                let perceptron1 = layer.perceptrons[perceptron1Name]
+
+                // Show perceptrons activateValue
+
+                perceptron1.visual.innerText = (perceptron1.activateValue).toFixed(2)
+
+                // Find layer after this one
+
+                let proceedingLayer = this.layers[parseInt(layerName) + 1]
+
+                if (!proceedingLayer) continue
+
+                // Loop through each perceptron in the next layer and draw a line
+
+                for (let perceptron2Name in proceedingLayer.perceptrons) {
+
+                    let perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
+
+
                 }
             }
         }
     }
     config() {
 
-        this.drawVisuals()
+        this.createVisuals()
     }
 }
 
