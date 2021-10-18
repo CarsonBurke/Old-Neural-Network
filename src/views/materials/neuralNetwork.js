@@ -482,7 +482,11 @@ class NeuralNetwork {
 
         if (boolean == 0) {
 
+            // Stop if line exists
+
             if (line) return
+
+            // Create line
 
             layer.lines[lineID] = new Line({
                 network: this,
@@ -497,6 +501,8 @@ class NeuralNetwork {
         // Remove line if 1
 
         if (boolean == 1) {
+
+            // Stop if line doesn't exist
 
             if (!line) return
 
