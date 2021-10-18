@@ -373,9 +373,11 @@ class NeuralNetwork {
 
                     let perceptronCount = Object.keys(layer.perceptrons).length
 
-                    let line = layer.lines[perceptron1Name * perceptronCount + perceptron2Name]
+                    let lineID = perceptron1Name * perceptronCount + perceptron2Name
 
-                    this.mutateLine(layer, line)
+                    let line = layer.lines[lineID]
+
+                    this.mutateLine(layer, line, perceptron1, perceptron2, lineID)
                 }
             }
         }
@@ -487,31 +489,23 @@ class NeuralNetwork {
 
                     let perceptronCount = Object.keys(layer.perceptrons).length
 
-                    layer.lines[perceptron1Name * perceptronCount + perceptron2Name] = new Line({
+                    let lineID = perceptron1Name * perceptronCount + perceptron2Name
+
+                    layer.lines[lineID] = new Line({
                         network: this,
                         perceptron1: perceptron1,
-                        perceptron2: perceptron2
+                        perceptron2: perceptron2,
+                        id: lineID
                     })
 
-                    let line = layer.lines[perceptron1Name * perceptronCount + perceptron2Name]
+                    let line = layer.lines[lineID]
 
-                    this.mutateLine(layer, line)
+                    this.mutateLine(layer, line, lineID)
                 }
             }
         }
     }
-    updateLine(layer, perceptron1Name, perceptron2Name) {
-
-        let perceptronCount = Object.keys(layer.perceptrons).length
-
-        let el = layer.lines[perceptron1Name * perceptronCount + perceptron2Name].el
-
-        if (layer.perceptrons[perceptron1Name].activateValue > 0) {
-
-            el.classList.add("lineConnection")
-        } else el.classList.remove("lineConnection")
-    }
-    mutateLine(layer, line) {
+    mutateLine(layer, line, perceptron1, perceptron2, lineID) {
 
         // Get random value influenced by learning rate
 
@@ -521,13 +515,50 @@ class NeuralNetwork {
 
         if (value > 1) return
 
-        // Remove line el
+        // Decide if to subract or add
 
-        line.el.remove()
+        let boolean = Math.floor(Math.random() * 2)
 
-        // Delete line
+        // Create line if 2
 
-        delete layer[line]
+        if (boolean == 0) {
+
+            if (line) return
+
+            layer.lines[lineID] = new Line({
+                network: this,
+                perceptron1: perceptron1,
+                perceptron2: perceptron2,
+                id: lineID
+            })
+
+            return
+        }
+
+        // Remove line if 1
+
+        if (boolean == 1) {
+
+            if (!line) return
+
+            // Remove line el
+
+            line.el.remove()
+
+            // Delete line
+
+            delete layer.lines[line.id]
+            return
+        }
+    }
+    updateLine(line) {
+
+        let el = line.el
+
+        if (line.perceptron1.activateValue > 0) {
+
+            el.classList.add("lineConnection")
+        } else el.classList.remove("lineConnection")
     }
     updateVisuals() {
 
@@ -555,9 +586,19 @@ class NeuralNetwork {
 
                 for (let perceptron2Name in proceedingLayer.perceptrons) {
 
-                    let perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
+                    // Get line
 
+                    let perceptronCount = Object.keys(layer.perceptrons).length
 
+                    let lineID = perceptron1Name * perceptronCount + perceptron2Name
+
+                    let line = layer.lines[lineID]
+
+                    // Iterate if there is no line
+
+                    if (!line) continue
+
+                    this.updateLine(line)
                 }
             }
         }
