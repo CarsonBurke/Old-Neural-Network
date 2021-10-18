@@ -345,11 +345,40 @@ class NeuralNetwork {
     }
     learn() {
 
-        // For each perceptron mutate their weights
+        for (let layerName in this.layers) {
 
-        let perceptrons = this.getPerceptrons()
+            let layer = this.layers[layerName]
 
-        for (let perceptron of perceptrons) perceptron.learn()
+            // loop through perceptrons in the layer
+
+            for (let perceptron1Name in layer.perceptrons) {
+
+                let perceptron1 = layer.perceptrons[perceptron1Name]
+
+                // Mutate perceptron
+
+                perceptron1.learn()
+
+                // Find layer after this one
+
+                let proceedingLayer = this.layers[parseInt(layerName) + 1]
+
+                if (!proceedingLayer) continue
+
+                // Loop through each perceptron in the next layer and draw a line
+
+                for (let perceptron2Name in proceedingLayer.perceptrons) {
+
+                    let perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
+
+                    let perceptronCount = Object.keys(layer.perceptrons).length
+
+                    let line = layer.lines[perceptron1Name * perceptronCount + perceptron2Name]
+
+                    this.mutateLine(layer, line)
+                }
+            }
+        }
 
         return this
     }
