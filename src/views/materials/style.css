@@ -167,6 +167,11 @@ body {
     top: 10px;
     display: flex;
     pointer-events: none;
+    opacity: 0;
+}
+
+.visualsParentShow {
+    opacity: 1;
 }
 
 .layerVisual {

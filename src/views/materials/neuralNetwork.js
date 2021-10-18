@@ -459,7 +459,7 @@ class NeuralNetwork {
 
                     let line = layer.lines[lineID]
 
-                    this.mutateLine(layer, line, lineID)
+                    this.mutateLine(layer, line, perceptron1, perceptron2, lineID)
                 }
             }
         }
