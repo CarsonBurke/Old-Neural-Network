@@ -233,38 +233,59 @@ class NeuralNetwork {
 
 
     }
-    forwardPropagate() {
+    forwardPropagate(inputs) {
 
-        /* // Loop through layers
+        let network = this
+
+        function findInputs(layerName) {
+
+            let newInputs = []
+
+            // If in first layer
+
+            if (layerName == 0) {
+
+                // Add values from default inputs
+
+                for (let number of inputs) newInputs.push(number)
+
+                // Add bias
+
+                newInputs.push(network.bias)
+
+                return newInputs
+            }
+
+            let previousLayer = network.layers[layerName - 1]
+
+            for (let lineID in previousLayer.lines) {
+
+                let line = previousLayer.lines[lineID]
+
+                newInputs.push(line.perceptron1.activateValue)
+            }
+
+            return newInputs
+        }
+
+        //
 
         for (let layerName in this.layers) {
 
             let layer = this.layers[layerName]
 
-            // Loop through perceptrons in the layer
+            // loop through perceptrons in the layer
 
-            for (let lineName in perceptron.lines) {
+            for (let perceptron1Name in layer.perceptrons) {
 
-                let line = perceptron.lines[lineName]
+                let perceptron1 = layer.perceptrons[perceptron1Name]
 
-                // Find layer after this one
-
-                let proceedingLayer = this.layers[parseInt(layerName) + 1]
-
-                // Stop if there is no proceedingLayer
-
-                if (!proceedingLayer) continue
-
-                // Loop through each perceptron in the next layer
-
-                for (let perceptron2Name in proceedingLayer.perceptrons) {
-
-                    let perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
-
-
-                }
+                perceptron1.run({
+                    importantValues: this.getImportantValues(),
+                    inputs: findInputs(layerName),
+                })
             }
-        } */
+        }
     }
     getImportantValues() {
 
@@ -279,69 +300,7 @@ class NeuralNetwork {
     }
     run(opts) {
 
-        let network = this
-
-        function findInputs(layerName) {
-
-            let newInputs = []
-
-            // If in first layer
-
-            if (layerName == 0) {
-
-                // Add values from default inputs
-
-                for (let number of opts.inputs) newInputs.push(number)
-
-                // Add bias
-
-                newInputs.push(network.bias)
-
-                return newInputs
-            }
-
-            // Otherwise give inputs from the previous layers' outputs
-
-            let newLayers = []
-
-            let previousLayer = network.layers[layerName - 1]
-
-            // loop through each perceptron in the layer
-
-            for (let perceptronName in previousLayer.perceptrons) {
-
-                let perceptron = previousLayer.perceptrons[perceptronName]
-
-                newLayers.push(perceptron.activateValue)
-            }
-
-            return newLayers
-        }
-
-        // Loop through each layer in the network
-
-        for (let layerName in this.layers) {
-
-            let layer = this.layers[layerName]
-
-            // loop through each perceptron in the layer
-
-            for (let perceptronName in layer.perceptrons) {
-
-                let perceptron = layer.perceptrons[perceptronName]
-
-                // Use the layer and perceptron location to idenify what inputs it should have
-
-                let inputs = findInputs(layerName)
-
-                // Run the perceptron
-
-                perceptron.run({
-                    importantValues: this.getImportantValues(),
-                    inputs: inputs,
-                })
-            }
-        }
+        this.forwardPropagate(opts.inputs)
     }
     learn() {
 

@@ -59,8 +59,6 @@ setInterval(function() {
 
     network.updateVisuals()
 
-    network.forwardPropagate()
-
 }, 200)
 
 // Mutate neural network
