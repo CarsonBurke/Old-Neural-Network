@@ -59,7 +59,7 @@ setInterval(function() {
 
     network.updateVisuals()
 
-}, 20)
+}, 2)
 
 // Mutate neural network
 
@@ -67,3 +67,13 @@ setInterval(function() {
 
     network.learn()
 }, 2)
+
+//
+
+setInterval(function() {
+
+    let network2 = network.clone()
+    
+    console.log(network)
+    console.log(network2)
+}, 1000)

@@ -271,6 +271,8 @@ class NeuralNetwork {
                 newInputs.push(line.perceptron1.activateValue)
             }
 
+            newInputs.push(network.bias)
+
             return newInputs
         }
 
@@ -575,6 +577,10 @@ class NeuralNetwork {
                 }
             }
         }
+    }
+    clone() {
+
+        return new NeuralNetwork(this)
     }
     config() {
 
