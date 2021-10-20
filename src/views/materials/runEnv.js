@@ -59,11 +59,11 @@ setInterval(function() {
 
     network.updateVisuals()
 
-}, 200)
+}, 20)
 
 // Mutate neural network
 
 setInterval(function() {
 
     network.learn()
-}, 200)
+}, 2)

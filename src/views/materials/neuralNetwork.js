@@ -237,7 +237,7 @@ class NeuralNetwork {
 
         let network = this
 
-        function findInputs(layerName) {
+        function findInputs(layerName, perceptron) {
 
             let newInputs = []
 
@@ -262,13 +262,19 @@ class NeuralNetwork {
 
                 let line = previousLayer.lines[lineID]
 
+                // Make sure line is connected to to perceptron
+
+                if (line.perceptron2 != perceptron) continue
+
+                // Add lines value to inputs
+
                 newInputs.push(line.perceptron1.activateValue)
             }
 
             return newInputs
         }
 
-        //
+        // Loop through layers
 
         for (let layerName in this.layers) {
 
@@ -276,13 +282,15 @@ class NeuralNetwork {
 
             // loop through perceptrons in the layer
 
-            for (let perceptron1Name in layer.perceptrons) {
+            for (let perceptronName in layer.perceptrons) {
 
-                let perceptron1 = layer.perceptrons[perceptron1Name]
+                let perceptron = layer.perceptrons[perceptronName]
 
-                perceptron1.run({
+                // Run the perceptron
+
+                perceptron.run({
                     importantValues: this.getImportantValues(),
-                    inputs: findInputs(layerName),
+                    inputs: findInputs(layerName, perceptron),
                 })
             }
         }
