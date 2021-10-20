@@ -200,6 +200,10 @@ class NeuralNetwork {
 
             this[valueName] = opts[valueName]
         }
+
+        // Initialize
+
+        this.config()
     }
     addLayer(opts) {
 
@@ -239,7 +243,7 @@ class NeuralNetwork {
 
         function findInputs(layerName, perceptron) {
 
-            let newInputs = []
+            let newInputs = [network.bias]
 
             // If in first layer
 
@@ -248,10 +252,6 @@ class NeuralNetwork {
                 // Add values from default inputs
 
                 for (let number of inputs) newInputs.push(number)
-
-                // Add bias
-
-                newInputs.push(network.bias)
 
                 return newInputs
             }
@@ -270,8 +270,6 @@ class NeuralNetwork {
 
                 newInputs.push(line.perceptron1.activateValue)
             }
-
-            newInputs.push(network.bias)
 
             return newInputs
         }
@@ -580,7 +578,9 @@ class NeuralNetwork {
     }
     clone() {
 
-        return new NeuralNetwork(this)
+        let newNetwork = new NeuralNetwork()
+
+        return newNetwork
     }
     config() {
 
