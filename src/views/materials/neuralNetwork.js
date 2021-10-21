@@ -143,27 +143,13 @@ class Perceptron {
 
         this.activate()
     }
-    learn() {
-
-        this.mutateWeights()
-    }
 }
 
 class Layer {
     constructor() {
 
         this.perceptrons = {}
-    }
-    addPerceptrons(amount) {
-
-        let i = 0
-
-        while (i < amount) {
-
-            this.addPerceptron()
-
-            i++
-        }
+        this.lines = {}
     }
     addPerceptron() {
 
@@ -200,10 +186,6 @@ class NeuralNetwork {
 
             this[valueName] = opts[valueName]
         }
-
-        // Initialize
-
-        this.config()
     }
     addLayer(opts) {
 
@@ -215,27 +197,16 @@ class NeuralNetwork {
 
         return this.layers[layersCount]
     }
-    getPerceptrons() {
+    getImportantValues() {
 
-        let perceptrons = []
+        let values = {}
 
-        for (let layerName in this.layers) {
+        for (let valueName in defaults) {
 
-            let layer = this.layers[layerName]
-
-            for (let perceptronName in layer.perceptrons) {
-
-                let perceptron = layer.perceptrons[perceptronName]
-
-                perceptrons.push(perceptron)
-            }
+            values[valueName] = this[valueName]
         }
 
-        return perceptrons
-    }
-    train() {
-
-
+        return values
     }
     forwardPropagate(inputs) {
 
@@ -266,9 +237,14 @@ class NeuralNetwork {
 
                 if (line.perceptron2 != perceptron) continue
 
-                // Add lines value to inputs
+                // Add line's perceptron activateValue to inputs
 
                 newInputs.push(line.perceptron1.activateValue)
+            }
+
+            for (let i = 0; i < newInputs.length; i++) {
+
+                if (newInputs[i] == NaN) console.log(i + " NaN")
             }
 
             return newInputs
@@ -295,21 +271,6 @@ class NeuralNetwork {
             }
         }
     }
-    getImportantValues() {
-
-        let values = {}
-
-        for (let valueName in defaults) {
-
-            values[valueName] = this[valueName]
-        }
-
-        return values
-    }
-    run(opts) {
-
-        this.forwardPropagate(opts.inputs)
-    }
     learn() {
 
         for (let layerName in this.layers) {
@@ -324,7 +285,7 @@ class NeuralNetwork {
 
                 // Mutate perceptron
 
-                perceptron1.learn()
+                perceptron1.mutateWeights()
 
                 // Find layer after this one
 
@@ -340,7 +301,7 @@ class NeuralNetwork {
 
                     let perceptronCount = Object.keys(layer.perceptrons).length
 
-                    let lineID = perceptron1Name * perceptronCount + perceptron2Name
+                    let lineID = parseInt(perceptron1Name) * perceptronCount + parseInt(perceptron2Name)
 
                     let line = layer.lines[lineID]
 
@@ -421,10 +382,6 @@ class NeuralNetwork {
 
                 layer.visual.appendChild(perceptronVisual)
                 perceptron1.visual = perceptronVisual
-
-                //
-
-                layer.lines = {}
             }
         }
 
@@ -456,7 +413,7 @@ class NeuralNetwork {
 
                     let perceptronCount = Object.keys(layer.perceptrons).length
 
-                    let lineID = perceptron1Name * perceptronCount + perceptron2Name
+                    let lineID = parseInt(perceptron1Name) * perceptronCount + parseInt(perceptron2Name)
 
                     layer.lines[lineID] = new Line({
                         network: this,
@@ -563,7 +520,7 @@ class NeuralNetwork {
 
                     let perceptronCount = Object.keys(layer.perceptrons).length
 
-                    let lineID = perceptron1Name * perceptronCount + perceptron2Name
+                    let lineID = parseInt(perceptron1Name) * perceptronCount + parseInt(perceptron2Name)
 
                     let line = layer.lines[lineID]
 
@@ -576,16 +533,4 @@ class NeuralNetwork {
             }
         }
     }
-    clone() {
-
-        let newNetwork = new NeuralNetwork()
-
-        return newNetwork
-    }
-    config() {
-
-        this.createVisuals()
-    }
 }
-
-export { NeuralNetwork }

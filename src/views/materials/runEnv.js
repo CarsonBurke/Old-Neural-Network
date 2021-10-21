@@ -1,91 +1,61 @@
-import { NeuralNetwork } from "./neuralNetwork.js"
+//
 
-let networks = []
+let inputs = [1, 5, 4]
 
-let inputs = [1, 5, 6]
+let outputCount = 2
 
-createNetwork()
+// Create neural network
 
-function createNetwork() {
+let network = new NeuralNetwork()
 
-    // Create neural network
+// Create layers
 
-    let network = new NeuralNetwork()
+let layerCount = 3
 
-    //
+for (let i = 0; i < layerCount; i++) network.addLayer({})
 
-    let outputCount = 2
+// Create perceptrons
 
-    // Create layers
+// Create input perceptrons
 
-    let layerCount = 3
+for (let i = 0; i < inputs.length; i++) network.layers[0].addPerceptron()
 
-    for (let i = 0; i < layerCount; i++) network.addLayer({})
+// Create hidden perceptrons
 
-    // Create perceptrons
+let hiddenPerceptronsNeed = 5
 
-    // Create input perceptrons
+// Loop through layers
 
-    network.layers[0].addPerceptrons(inputs.length)
+for (let layerName in network.layers) {
 
-    // Create hidden perceptrons
+    // Filter only hidden layers
 
-    let hiddenPerceptronsNeed = 4
+    let layersCount = Object.keys(network.layers).length
 
-    // Loop through layers
+    if (layerName > 0 && layerName < layersCount - 1) {
 
-    for (let layerName in network.layers) {
+        let layer = network.layers[layerName]
 
-        // Filter only hidden layers
-
-        let layersCount = Object.keys(network.layers).length
-
-        if (layerName > 0 && layerName < layersCount - 1) {
-
-            let layer = network.layers[layerName]
-
-            layer.addPerceptrons(hiddenPerceptronsNeed)
-        }
+        for (let i = 0; i < hiddenPerceptronsNeed; i++) layer.addPerceptron()
     }
-
-    // Create output perceptrons
-
-    network.layers[layerCount - 1].addPerceptrons(outputCount)
-
-    //
-
-    networks.push(network)
 }
+
+// Create output perceptrons
+
+for (let i = 0; i < outputCount; i++) network.layers[layerCount - 1].addPerceptron()
 
 //
 
-networks.push(networks[0].clone())
+network.createVisuals()
 
 //
 
-console.log(networks)
+setInterval(function() {
 
-for (let network of networks) runNetwork(network)
+    network.forwardPropagate(inputs)
 
-function runNetwork(network) {
+    network.updateVisuals()
 
-    // Run neural network
+    network.learn()
 
-    setInterval(function() {
-
-        network.run({
-            inputs: inputs
-        })
-
-        network.updateVisuals()
-
-    }, 1)
-
-    // Mutate neural network 
-
-    setInterval(function() {
-
-        network.learn()
-
-    }, 10)
-}
+}, 1)
