@@ -241,12 +241,7 @@ class NeuralNetwork {
 
                 newInputs.push(line.perceptron1.activateValue)
             }
-
-            for (let i = 0; i < newInputs.length; i++) {
-
-                if (newInputs[i] == NaN) console.log(i + " NaN")
-            }
-
+            
             return newInputs
         }
 
@@ -443,7 +438,7 @@ class NeuralNetwork {
 
         let boolean = Math.floor(Math.random() * 2)
 
-        // Create line if 2
+        // Create line if 0
 
         if (boolean == 0) {
 

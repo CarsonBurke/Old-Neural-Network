@@ -1,6 +1,6 @@
 //
 
-let inputs = [1, 5, 4]
+let inputs = [1, 2, 3]
 
 let outputCount = 2
 
