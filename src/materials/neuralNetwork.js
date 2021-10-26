@@ -282,7 +282,7 @@ class NeuralNetwork {
 
                 // Iterate if line's output perceptron isn't this perceptron
 
-                if (line.perceptron1 != perceptron) continue
+                if (line.perceptron2 != perceptron) continue
 
                 // If line is not connected
 
