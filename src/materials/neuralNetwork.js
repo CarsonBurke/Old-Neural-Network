@@ -13,6 +13,8 @@ class Line {
             this[propertyName] = opts[propertyName]
         }
 
+        this.connected = true
+
         // Create element
 
         let x1 = this.perceptron1.visual.getBoundingClientRect().left
@@ -278,9 +280,19 @@ class NeuralNetwork {
 
                 const line = previousLayer.lines[lineID]
 
-                // Make sure line is connected to to perceptron
+                // Iterate if line's output perceptron isn't this perceptron
 
-                if (line.perceptron2 != perceptron) continue
+                if (line.perceptron1 != perceptron) continue
+
+                // If line is not connected
+
+                if (!line.connected) {
+
+                    // Add 0 to newInputs
+
+                    newInputs.push(0)
+                    continue
+                }
 
                 // Add line's perceptron activateValue to inputs
 
@@ -345,7 +357,7 @@ class NeuralNetwork {
 
                     let line = layer.lines[lineID]
 
-                    this.mutateLine(layer, line, perceptron1, perceptron2, lineID)
+                    this.mutateLine(line)
                 }
             }
         }
@@ -464,12 +476,12 @@ class NeuralNetwork {
 
                     let line = layer.lines[lineID]
 
-                    this.mutateLine(layer, line, perceptron1, perceptron2, lineID)
+                    this.mutateLine(line)
                 }
             }
         }
     }
-    mutateLine(layer, line, perceptron1, perceptron2, lineID) {
+    mutateLine(line) {
 
         // Get random value influenced by learning rate
 
@@ -483,41 +495,41 @@ class NeuralNetwork {
 
         let boolean = Math.floor(Math.random() * 2)
 
-        // Create line if 0
+        // Enable line if 0
 
         if (boolean == 0) {
 
-            // Stop if line exists
+            // Stop if line is already connected
 
-            if (line) return
+            if (line.connected) return
 
-            // Create line
+            // Show line element
 
-            layer.lines[lineID] = new Line({
-                network: this,
-                perceptron1: perceptron1,
-                perceptron2: perceptron2,
-                id: lineID
-            })
+            line.el.classList.remove('disconnectedLine')
+
+            // Record that the line is connected
+
+            line.connected = true
 
             return
         }
 
-        // Remove line if 1
+        // Disable line if 1
 
         if (boolean == 1) {
 
-            // Stop if line doesn't exist
+            // Stop if line is already not connected
 
-            if (!line) return
+            if (!line.connected) return
 
-            // Remove line el
+            // Hide line element
 
-            line.el.remove()
+            line.el.classList.add('disconnectedLine')
 
-            // Delete line
+            // Record that the line is disconnected
 
-            delete layer.lines[line.id]
+            line.connected = false
+
             return
         }
     }
