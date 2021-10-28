@@ -284,7 +284,7 @@ class NeuralNetwork {
 
             const previousLayer = network.layers[layerName - 1]
 
-            for (let lineID in previousLayer.lines) {
+            for (const lineID in previousLayer.lines) {
 
                 const line = previousLayer.lines[lineID]
 
@@ -333,38 +333,30 @@ class NeuralNetwork {
     }
     learn() {
 
+        // Loop through layers in network
+
         for (const layerName in this.layers) {
 
             const layer = this.layers[layerName]
 
-            // loop through perceptrons in the layer
+            // Loop through perceptrons in the layer
 
-            for (const perceptron1Name in layer.perceptrons) {
+            for (const perceptronName in layer.perceptrons) {
 
-                const perceptron1 = layer.perceptrons[perceptron1Name]
+                const perceptron = layer.perceptrons[perceptronName]
 
                 // Mutate perceptron
 
-                perceptron1.mutateWeights()
+                perceptron.mutateWeights()
+            }
 
-                // Find layer after this one
+            // Loop through lines in layer
 
-                const proceedingLayer = this.layers[parseInt(layerName) + 1]
+            for (const lineID in layer.lines) {
 
-                if (!proceedingLayer) continue
+                const line = layer.lines[lineID]
 
-                // Loop through each perceptron in the next layer and draw a line
-
-                for (const perceptron2Name in proceedingLayer.perceptrons) {
-
-                    const perceptronCount = Object.keys(layer.perceptrons).length
-
-                    const lineID = parseInt(perceptron1Name) * perceptronCount + parseInt(perceptron2Name)
-
-                    const line = layer.lines[lineID]
-
-                    this.mutateLine(line)
-                }
+                this.mutateLine(line)
             }
         }
 
@@ -469,18 +461,14 @@ class NeuralNetwork {
 
                     const perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
 
-                    const perceptronCount = Object.keys(layer.perceptrons).length
+                    const lineID = newID()
 
-                    const lineID = parseInt(perceptron1Name) * perceptronCount + parseInt(perceptron2Name)
-
-                    layer.lines[lineID] = new Line({
+                    const line = layer.lines[lineID] = new Line({
                         network: this,
                         perceptron1: perceptron1,
                         perceptron2: perceptron2,
                         id: lineID
                     })
-
-                    const line = layer.lines[lineID]
 
                     this.mutateLine(line)
                 }
@@ -548,44 +536,28 @@ return
     }
     updateVisuals() {
 
-        for (let layerName in this.layers) {
+        for (const layerName in this.layers) {
 
-            let layer = this.layers[layerName]
+            const layer = this.layers[layerName]
 
-            // loop through perceptrons in the layer
+            // Loop through perceptrons in the layer
 
-            for (let perceptron1Name in layer.perceptrons) {
+            for (const perceptron1Name in layer.perceptrons) {
 
-                let perceptron1 = layer.perceptrons[perceptron1Name]
+                const perceptron1 = layer.perceptrons[perceptron1Name]
 
                 // Show perceptrons activateValue
 
                 perceptron1.visual.innerText = (perceptron1.activateValue).toFixed(2)
+            }
 
-                // Find layer after this one
+            // Loop through lines in layer
 
-                let proceedingLayer = this.layers[parseInt(layerName) + 1]
+            for (const lineID in layer.lines) {
 
-                if (!proceedingLayer) continue
+                const line = layer.lines[lineID]
 
-                // Loop through each perceptron in the next layer and draw a line
-
-                for (let perceptron2Name in proceedingLayer.perceptrons) {
-
-                    // Get line
-
-                    let perceptronCount = Object.keys(layer.perceptrons).length
-
-                    let lineID = parseInt(perceptron1Name) * perceptronCount + parseInt(perceptron2Name)
-
-                    let line = layer.lines[lineID]
-
-                    // Iterate if there is no line
-
-                    if (!line) continue
-
-                    this.updateLine(line)
-                }
+                this.updateLine(line)
             }
         }
     }
