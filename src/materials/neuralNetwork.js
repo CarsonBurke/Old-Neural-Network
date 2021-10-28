@@ -492,7 +492,7 @@ class NeuralNetwork {
         // Enable line if 0
 
         if (boolean == 0) {
-return
+            
             // Stop if line is already connected
 
             if (line.connected) return
