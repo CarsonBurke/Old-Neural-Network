@@ -216,11 +216,11 @@ body {
     transition: all 0.1s;
 }
 
-.disconnectedLine {
+.lineDisconnected {
     opacity: 0;
 }
 
-.lineConnection {
+.lineConnected {
     stroke: rgba(14, 81, 226, 0.75);
 }
 
