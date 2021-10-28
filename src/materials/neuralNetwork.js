@@ -2,6 +2,8 @@ let idIndex = 0
 
 function newID() {
 
+    // Increment idIndex and return the result
+
     return idIndex += 1
 }
 
@@ -24,11 +26,11 @@ class Line {
 
         // Create element
 
-        let x1 = this.perceptron1.visual.getBoundingClientRect().left
-        let y1 = this.perceptron1.visual.getBoundingClientRect().top
+        let x1 = Math.floor(this.perceptron1.visual.getBoundingClientRect().left)
+        let y1 = Math.floor(this.perceptron1.visual.getBoundingClientRect().top)
 
-        let x2 = this.perceptron2.visual.getBoundingClientRect().left
-        let y2 = this.perceptron2.visual.getBoundingClientRect().top
+        let x2 = Math.floor(this.perceptron2.visual.getBoundingClientRect().left)
+        let y2 = Math.floor(this.perceptron2.visual.getBoundingClientRect().top)
 
         let el = document.createElementNS('http://www.w3.org/2000/svg', 'line')
 
@@ -38,7 +40,6 @@ class Line {
         el.setAttribute('y2', y2 + this.perceptron2.visual.offsetHeight / 2 - this.network.visualsParent.getBoundingClientRect().top)
 
         el.classList.add("line")
-        el.id = this.id
 
         this.network.svg.appendChild(el)
         this.el = el
