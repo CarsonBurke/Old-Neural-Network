@@ -50,10 +50,14 @@ function createNetwork() {
     
     //
     
-    network.createVisuals()
+    network.init(inputs)
 
     networks.push(network)
 }
+
+// Clone network
+
+networks.push(networks[0].clone(inputs))
 
 // Run ticks
 
