@@ -216,12 +216,12 @@ body {
     transition: all 0.1s;
 }
 
-.lineDisconnected {
-    opacity: 0;
+.lineActive {
+    stroke: rgba(14, 81, 226, 0.75);
 }
 
-.lineConnected {
-    stroke: rgba(14, 81, 226, 0.75);
+.lineDisconnected {
+    opacity: 0;
 }
 
 
