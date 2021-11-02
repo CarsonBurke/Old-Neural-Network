@@ -200,6 +200,13 @@ body {
     background: rgb(250, 15, 15);
 }
 
+.textVisual {
+    font-size: 16px;
+    color: black;
+    position: absolute;
+    width: fit-content;
+}
+
 .lineParent {
     pointer-events: none;
     left: 0px;

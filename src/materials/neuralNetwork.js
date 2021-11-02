@@ -259,7 +259,7 @@ class NeuralNetwork {
 
                 // Add values from default inputs
 
-                for (let number of inputs) newInputs.push(number)
+                for (let inputObject of inputs) newInputs.push(inputObject.value)
 
                 return newInputs
             }
@@ -414,9 +414,10 @@ class NeuralNetwork {
             }
         }
 
-        this.createLines()
+        this.createLineVisuals()
+        this.createTextVisuals()
     }
-    createLines() {
+    createLineVisuals() {
 
         for (const layerName in this.layers) {
 
@@ -452,6 +453,30 @@ class NeuralNetwork {
                     this.mutateLine(line)
                 }
             }
+        }
+    }
+    createTextVisuals() {
+
+        let i = 0
+
+        for (const perceptronName in this.layers[0].perceptrons) {
+
+            const perceptron = this.layers[0].perceptrons[perceptronName]
+
+            const textVisual = document.createElement('h3')
+
+            textVisual.innerText = inputs[i].name
+
+            textVisual.classList.add('textVisual')
+
+            textVisual.style.top = perceptron.visual.getBoundingClientRect().top + perceptron.visual.offsetHeight / 4 - this.visualsParent.getBoundingClientRect().top + 'px'
+            textVisual.style.right = perceptron.visual.getBoundingClientRect().left - this.visualsParent.getBoundingClientRect().left + Object.keys(this.layers).length * 80 - 20 + 'px'
+
+            textVisual.style.textAlign = 'right'
+
+            this.visualsParent.appendChild(textVisual)
+
+            i++
         }
     }
     mutateLine(line) {

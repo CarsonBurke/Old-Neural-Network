@@ -1,6 +1,15 @@
 let networks = []
 
-let inputs = [1, 2, 3]
+const inputs = [
+    { name: 'Name1', value: 1 },
+    { name: 'Name2', value: 6 },
+    { name: 'Name3', value: 2 },
+]
+
+const outputs = [
+    { name: 'Name1' },
+    { name: 'Name2' }
+]
 
 let outputCount = 2
 
@@ -46,7 +55,7 @@ function createNetwork() {
     
     // Create output perceptrons
     
-    for (let i = 0; i < outputCount; i++) network.layers[layerCount - 1].addPerceptron()
+    for (let i = 0; i < outputs.length; i++) network.layers[layerCount - 1].addPerceptron()
     
     //
     
@@ -57,7 +66,7 @@ function createNetwork() {
 
 // Clone network
 
-networks.push(networks[0].clone(inputs))
+/* networks.push(networks[0].clone(inputs)) */
 
 // Run ticks
 
@@ -65,7 +74,7 @@ setInterval(function() {
 
     for (const network of networks) {
 
-        network.forwardPropagate(inputs)
+        network.forwardPropagate(inputs, outputs)
 
         network.updateVisuals()
     
