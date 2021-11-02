@@ -10,6 +10,7 @@ function newID() {
 let defaults = {
     learningRate: 0.2,
     bias: 0,
+    lineMutation: false,
 }
 
 class Line {
@@ -504,6 +505,10 @@ class NeuralNetwork {
         }
     }
     mutateLine(line) {
+
+        // Stop if line mutation is disabled
+
+        if (!this.lineMutation) return
 
         // Get random value influenced by learning rate
 
