@@ -415,7 +415,7 @@ class NeuralNetwork {
         }
 
         this.createLineVisuals()
-        this.createTextVisuals()
+        this.createTextVisuals(outputs)
     }
     createLineVisuals() {
 
@@ -455,7 +455,7 @@ class NeuralNetwork {
             }
         }
     }
-    createTextVisuals() {
+    createTextVisuals(outputs) {
 
         let i = 0
 
@@ -473,6 +473,30 @@ class NeuralNetwork {
             textVisual.style.right = perceptron.visual.getBoundingClientRect().left - this.visualsParent.getBoundingClientRect().left + Object.keys(this.layers).length * 80 - 20 + 'px'
 
             textVisual.style.textAlign = 'right'
+
+            this.visualsParent.appendChild(textVisual)
+
+            i++
+        }
+
+        i = 0
+
+        const layerCount = Object.keys(this.layers).length
+
+        for (const perceptronName in this.layers[layerCount - 1].perceptrons) {
+
+            const perceptron = this.layers[layerCount - 1].perceptrons[perceptronName]
+
+            const textVisual = document.createElement('h3')
+
+            textVisual.innerText = outputs[i].name
+
+            textVisual.classList.add('textVisual')
+
+            textVisual.style.top = perceptron.visual.getBoundingClientRect().top + perceptron.visual.offsetHeight / 4 - this.visualsParent.getBoundingClientRect().top + 'px'
+            textVisual.style.left = perceptron.visual.getBoundingClientRect().left + perceptron.visual.offsetWidth - this.visualsParent.getBoundingClientRect().left + 10 + 'px'
+
+            textVisual.style.textAlign = 'left'
 
             this.visualsParent.appendChild(textVisual)
 
@@ -565,9 +589,9 @@ class NeuralNetwork {
             }
         }
     }
-    init(inputs) {
+    init(inputs, outputs) {
 
-        this.createVisuals()
+        this.createVisuals(outputs)
 
         for (const layerName in this.layers) {
 

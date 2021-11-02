@@ -122,48 +122,12 @@ body {
 }
 
 
-/* UI */
-
-.UIParent {
-    color: black;
-    width: 300px;
-}
-
-.perceptronParent {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.15) 0 6px 50px 0;
-    border-radius: 6px;
-    overflow: hidden;
-    margin: 10px;
-}
-
-.perceptronTitle {
-    width: 100%;
-    font-size: 20px;
-    text-align: center;
-    background: whitesmoke;
-    padding: 10px 0;
-}
-
-.perceptronHeader {
-    width: fit-content;
-    font-size: 16px;
-    width: 50%;
-    padding: 5px 10px;
-}
-
-.perceptronContent {
-    width: 50%;
-    text-align: left;
-    padding: 5px 10px;
-}
+/* Visuals */
 
 .visualsParent {
     background: rgb(255, 255, 255);
     position: fixed;
-    right: 10px;
+    right: 100px;
     top: 10px;
     display: flex;
     pointer-events: none;
@@ -201,7 +165,7 @@ body {
 }
 
 .textVisual {
-    font-size: 16px;
+    font-size: 14px;
     color: black;
     position: absolute;
     width: fit-content;

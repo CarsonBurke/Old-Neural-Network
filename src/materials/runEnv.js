@@ -1,14 +1,14 @@
 let networks = []
 
 const inputs = [
-    { name: 'Name1', value: 1 },
-    { name: 'Name2', value: 6 },
-    { name: 'Name3', value: 2 },
+    { name: 'Bird y', value: 1 },
+    { name: 'Pipe y', value: 6 },
+    { name: 'Bird Velocity', value: 2 },
 ]
 
 const outputs = [
-    { name: 'Name1' },
-    { name: 'Name2' }
+    { name: 'Flap' },
+    { name: 'Suicide' }
 ]
 
 let outputCount = 2
@@ -59,7 +59,7 @@ function createNetwork() {
     
     //
     
-    network.init(inputs)
+    network.init(inputs, outputs)
 
     networks.push(network)
 }
@@ -74,7 +74,7 @@ setInterval(function() {
 
     for (const network of networks) {
 
-        network.forwardPropagate(inputs, outputs)
+        network.forwardPropagate(inputs)
 
         network.updateVisuals()
     
