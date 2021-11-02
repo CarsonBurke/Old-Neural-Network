@@ -1,14 +1,14 @@
 let networks = []
 
 const inputs = [
-    { name: 'y pos', value: 1 },
-    { name: 'x pos', value: 6 },
-    { name: 'velocity', value: 2 },
+    { name: 'X position', value: 1 },
+    { name: 'Y position', value: 6 },
+    { name: 'Velocity', value: 2 },
 ]
 
 const outputs = [
-    { name: 'flap' },
-    { name: 'dive' }
+    { name: 'Move up' },
+    { name: 'Move down' }
 ]
 
 let outputCount = 2
