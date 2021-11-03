@@ -66,7 +66,7 @@ function createNetwork() {
 
 // Clone network
 
-/* networks.push(networks[0].clone(inputs)) */
+for (let i = 0; i < 1; i++) networks.push(networks[0].clone(inputs))
 
 // Run ticks
 
