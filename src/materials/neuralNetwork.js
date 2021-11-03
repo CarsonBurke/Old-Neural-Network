@@ -342,7 +342,7 @@ class NeuralNetwork {
 
         return this
     }
-    createVisuals() {
+    createVisuals(outputs) {
 
         if (this.visualsParent) return
 
