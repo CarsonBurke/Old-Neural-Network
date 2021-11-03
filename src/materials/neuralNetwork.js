@@ -579,6 +579,15 @@ class NeuralNetwork {
 
                 const perceptron = layer.perceptrons[perceptronName]
 
+                // If perceptron's activateValue is 0
+
+                if (perceptron.activateValue == 0) {
+
+                    // Display 0 and iterate
+                    perceptron.visual.innerText = 0
+                    continue
+                }
+
                 // Show perceptrons activateValue
 
                 perceptron.visual.innerText = (perceptron.activateValue).toFixed(2)
