@@ -1,5 +1,3 @@
-let networks = []
-
 const inputs = [
     { name: 'X position', value: 1 },
     { name: 'Y position', value: 6 },
@@ -19,13 +17,13 @@ function createNetwork() {
     
     // Create neural network
     
-    let network = new NeuralNetwork()
+    const network = new NeuralNetwork()
     
     // Create layers
     
     let layerCount = 3
     
-    for (let i = 0; i < layerCount; i++) network.addLayer({})
+    for (let i = 0; i < layerCount; i++) network.addLayer()
     
     // Create perceptrons
     
@@ -60,19 +58,26 @@ function createNetwork() {
     //
     
     network.init(inputs, outputs)
-
-    networks.push(network)
 }
 
 // Clone network
 
-for (let i = 0; i < 0; i++) networks.push(networks[0].clone(inputs))
+const firstNetwork = networks[Object.keys(networks)[0]]
+
+for (let i = 0; i < 0; i++) {
+
+    // Clone firstNetwork and assign duplicateNetwork to networks
+
+    const clonedNetwork = firstNetwork.clone(inputs, outputs)
+}
 
 // Run ticks
 
 setInterval(function() {
 
-    for (const network of networks) {
+    for (const ID in networks) {
+
+        const network = networks[ID]
 
         network.forwardPropagate(inputs)
 
