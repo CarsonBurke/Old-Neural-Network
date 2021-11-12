@@ -171,19 +171,14 @@ body {
 }
 
 .lineParent {
-    pointer-events: none;
-    left: 0px;
-    top: 0px;
     position: absolute;
-    width: 100%;
     height: 100%;
-    z-index: 0;
+    width: 100%;
 }
 
 .line {
     stroke: rgba(0, 0, 0, 0.75);
     stroke-width: 1.5px;
-    transition: all 0.1s;
 }
 
 .lineActive {

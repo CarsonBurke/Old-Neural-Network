@@ -121,7 +121,7 @@ NeuralNetwork.prototype.createVisuals = function(outputs) {
 
     visualsParent.classList.add("visualsParent")
 
-    visualsParent.style.width = Object.keys(network.layers).length * 80 + "px"
+    visualsParent.style.width = Object.keys(network.layers).length * network.layerVisualWidth + "px"
 
     document.body.appendChild(visualsParent)
     network.visualsParent = visualsParent
@@ -244,7 +244,7 @@ NeuralNetwork.prototype.createTextVisuals = function(outputs) {
         textVisual.classList.add('textVisual')
 
         textVisual.style.top = perceptron.visual.getBoundingClientRect().top + perceptron.visual.offsetHeight / 4 - network.visualsParent.getBoundingClientRect().top + 'px'
-        textVisual.style.right = perceptron.visual.getBoundingClientRect().left - network.visualsParent.getBoundingClientRect().left + Object.keys(network.layers).length * 80 - 20 + 'px'
+        textVisual.style.right =  network.visualsParent.getBoundingClientRect().left - perceptron.visual.getBoundingClientRect().left + Object.keys(network.layers).length * network.layerVisualWidth + 10 + 'px'
 
         textVisual.style.textAlign = 'right'
 
