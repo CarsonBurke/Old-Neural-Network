@@ -109,7 +109,7 @@ NeuralNetwork.prototype.learn = function() {
 
     return network
 }
-NeuralNetwork.prototype.createVisuals = function(outputs) {
+NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
     const network = this
 
@@ -185,7 +185,7 @@ NeuralNetwork.prototype.createVisuals = function(outputs) {
     }
 
     network.createLineVisuals()
-    network.createTextVisuals(outputs)
+    network.createTextVisuals(inputs, outputs)
 }
 NeuralNetwork.prototype.createLineVisuals = function() {
 
@@ -227,7 +227,7 @@ NeuralNetwork.prototype.createLineVisuals = function() {
         }
     }
 }
-NeuralNetwork.prototype.createTextVisuals = function(outputs) {
+NeuralNetwork.prototype.createTextVisuals = function(inputs, outputs) {
 
     const network = this
 
@@ -386,7 +386,7 @@ NeuralNetwork.prototype.init = function(inputs, outputs) {
 
     const network = this
 
-    network.createVisuals(outputs)
+    network.createVisuals(inputs, outputs)
 
     for (const layerName in network.layers) {
 
