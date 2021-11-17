@@ -21,9 +21,9 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
         // If in first layer
 
-        if (layerName == 0) {
+        if (layerName == 0) { 
 
-            // Add values from default inputs
+            // Assign input value relative to perceptronName
 
             newInputs.push(Object.values(inputs)[perceptronName].value)
 
