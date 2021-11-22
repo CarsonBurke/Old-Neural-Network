@@ -21,7 +21,7 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
         // If in first layer
 
-        if (layerName == 0) { 
+        if (layerName == 0) {
 
             // Assign input value relative to perceptronName
 
@@ -54,7 +54,7 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
             newInputs.push(0)
         }
-        
+
         return newInputs
     }
 
@@ -245,7 +245,7 @@ NeuralNetwork.prototype.createTextVisuals = function(inputs, outputs) {
         textVisual.classList.add('textVisual')
 
         textVisual.style.top = perceptron.visual.getBoundingClientRect().top + perceptron.visual.offsetHeight / 4 - network.visualsParent.getBoundingClientRect().top + 'px'
-        textVisual.style.right =  network.visualsParent.getBoundingClientRect().left - perceptron.visual.getBoundingClientRect().left + Object.keys(network.layers).length * network.layerVisualWidth + 10 + 'px'
+        textVisual.style.right = network.visualsParent.getBoundingClientRect().left - perceptron.visual.getBoundingClientRect().left + Object.keys(network.layers).length * network.layerVisualWidth + 10 + 'px'
 
         textVisual.style.textAlign = 'right'
 
@@ -301,7 +301,7 @@ NeuralNetwork.prototype.mutateLine = function(line) {
     // Enable line if 0
 
     if (boolean == 0) {
-        
+
         // Stop if line is already connected
 
         if (line.connected) return
@@ -363,10 +363,22 @@ NeuralNetwork.prototype.updateVisuals = function() {
 
             if (perceptron.activateValue == 0) {
 
-                // Display 0 and iterate
+                // Display 0
+
                 perceptron.visual.innerText = 0
+
+                // Style outline
+
+                perceptron.visual.style.outlineColor = 'black'
+
+                // Iterate
+
                 continue
             }
+
+            // Style outline
+
+            perceptron.visual.style.outlineColor = 'rgba(14, 81, 226, 0.75)'
 
             // Show perceptrons activateValue
 
@@ -442,10 +454,10 @@ NeuralNetwork.prototype.clone = function(inputs, outputs) {
         for (const perceptronName in layer.perceptrons) {
 
             const perceptron = layer.perceptrons[perceptronName]
-            
+
             newLayer.addPerceptron()
             const newPerceptron = newLayer.perceptrons[perceptronName]
-            
+
             newPerceptron.weights = perceptron.weights
         }
     }
@@ -473,7 +485,7 @@ NeuralNetwork.prototype.clone = function(inputs, outputs) {
             const newLayerLineID = Object.keys(newLayer.lines)[i]
 
             // Assign line property to newNeuralNetwork's adjacent line
-            
+
             newLayer.lines[newLayerLineID].connected = line.connected
 
             //
