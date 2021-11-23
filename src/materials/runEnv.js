@@ -9,8 +9,6 @@ const outputs = [
     { name: 'Move down' }
 ]
 
-let outputCount = 2
-
 createNetwork()
 
 function createNetwork() {

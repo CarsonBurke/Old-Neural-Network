@@ -37,24 +37,22 @@ Perceptron.prototype.mutateWeights = function() {
 
     perceptron.weights = newWeights
 }
-Perceptron.prototype.createWeights = function(inputs) {
+
+Perceptron.prototype.findWeightCount() {
 
     const perceptron = this
     const network = networks[perceptron.networkID]
 
-    // Create one weight perceptron in previous layer
+    // Config weightCount with an account for the bias
 
-    perceptron.weights = []
+    let weightCount = 1
 
-    // Find previous layer
-
-    let iterations = 1
-
-    // If layerName is 0
+    // If perceptron's layerName is 0
 
     if (perceptron.layerName == 0) {
 
-        iterations += inputs.length
+        weightCount += inputs.length
+        return weightCount
     }
 
     // If perceptron's layerName is more than 0
@@ -71,12 +69,25 @@ Perceptron.prototype.createWeights = function(inputs) {
 
         // Change iterations to number of perceptrons in previous layer
         
-        iterations += previousLayerPerceptronCount
+        weightCount += previousLayerPerceptronCount
+        return weightCount
     }
+}
+
+Perceptron.prototype.createWeights = function(inputs) {
+
+    const perceptron = this
+    const network = networks[perceptron.networkID]
+
+    // Create one weight perceptron in previous layer
+
+    perceptron.weights = []
+
+    const weightCount = perceptron.findWeightCount()
 
     // Iterate for number of perceptrons in previous layer
 
-    for (let i = 0; i < iterations; i++) {
+    for (let i = 0; i < weightCount; i++) {
 
         // Get a random value relative to the size of learningRate
 
@@ -87,6 +98,7 @@ Perceptron.prototype.createWeights = function(inputs) {
         perceptron.weights.push(value)
     }
 }
+
 Perceptron.prototype.updateWeights = function() {
 
     const perceptron = this
@@ -110,6 +122,7 @@ Perceptron.prototype.updateWeights = function() {
         i++
     }
 }
+
 Perceptron.prototype.transfer = function() {
 
     const perceptron = this
@@ -122,6 +135,7 @@ Perceptron.prototype.transfer = function() {
 
     for (let weightResult of perceptron.weightResults) perceptron.transferValue += weightResult
 }
+
 Perceptron.prototype.activate = function() {
 
     const perceptron = this
@@ -130,6 +144,7 @@ Perceptron.prototype.activate = function() {
 
     perceptron.activateValue = Math.max(perceptron.transferValue, 0)
 }
+
 Perceptron.prototype.run = function(inputs) {
 
     const perceptron = this
