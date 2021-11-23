@@ -38,6 +38,38 @@ Perceptron.prototype.mutateWeights = function() {
     perceptron.weights = newWeights
 }
 
+Perceptron.prototype.updateVisual = function() {
+
+    const perceptron = this
+    const network = networks[perceptron.networkID]
+
+    // If perceptron's activateValue is 0
+
+    if (perceptron.activateValue == 0) {
+
+        // Display 0
+
+        perceptron.visual.innerText = 0
+
+        // Style outline
+
+        perceptron.visual.style.outlineColor = network.inactiveColor
+
+        // Iterate
+
+        return
+    }
+
+    // Style outline
+
+    perceptron.visual.style.outlineColor = network.activeColor
+
+    // Show perceptrons activateValue
+
+    perceptron.visual.innerText = (perceptron.activateValue).toFixed(2)
+    return
+}
+
 Perceptron.prototype.findWeightCount = function(inputs) {
 
     const perceptron = this

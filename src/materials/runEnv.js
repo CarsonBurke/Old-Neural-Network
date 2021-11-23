@@ -31,7 +31,7 @@ function createNetwork() {
     
     // Create hidden perceptrons
     
-    let hiddenPerceptronsNeed = 5
+    let hiddenPerceptronsNeed = 4
     
     // Loop through layers
     
