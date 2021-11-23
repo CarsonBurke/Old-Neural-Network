@@ -38,7 +38,7 @@ Perceptron.prototype.mutateWeights = function() {
     perceptron.weights = newWeights
 }
 
-Perceptron.prototype.findWeightCount() {
+Perceptron.prototype.findWeightCount = function(inputs) {
 
     const perceptron = this
     const network = networks[perceptron.networkID]
@@ -83,7 +83,7 @@ Perceptron.prototype.createWeights = function(inputs) {
 
     perceptron.weights = []
 
-    const weightCount = perceptron.findWeightCount()
+    const weightCount = perceptron.findWeightCount(inputs)
 
     // Iterate for number of perceptrons in previous layer
 
