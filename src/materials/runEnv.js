@@ -66,7 +66,7 @@ for (let i = 0; i < 0; i++) {
 
     // Clone firstNetwork and assign duplicateNetwork to networks
 
-    const clonedNetwork = firstNetwork.clone(inputs, outputs)
+    firstNetwork.clone(inputs, outputs)
 }
 
 // Run ticks
