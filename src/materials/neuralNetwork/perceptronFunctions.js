@@ -1,39 +1,38 @@
+Perceptron.prototype.mutateWeight = function(weight, amount) {
+
+    const perceptron = this
+
+    // Decide if to subract or add
+
+    let boolean = Math.floor(Math.random() * 2)
+
+    // Random amount to mutate
+
+    let mutation = Math.random() * amount
+
+    // Apply mutation
+
+    if (boolean == 0) {
+
+        weight += Math.random() * mutation
+        return weight
+    }
+    if (boolean == 1) {
+
+        weight -= Math.random() * mutation
+        return weight
+    }
+}
 Perceptron.prototype.mutateWeights = function() {
 
     const perceptron = this
     const network = networks[perceptron.networkID]
 
-    // Randomly adjust a value by a set amount
-
-    function mutate(value, amount) {
-
-        // Decide if to subract or add
-
-        let boolean = Math.floor(Math.random() * 2)
-
-        // Random amount to mutate
-
-        let mutation = Math.random() * amount
-
-        // Apply mutation
-
-        if (boolean == 0) {
-
-            value += Math.random() * mutation
-            return value
-        }
-        if (boolean == 1) {
-
-            value -= Math.random() * mutation
-            return value
-        }
-    }
-
     // Mutate weights
 
     let newWeights = []
 
-    for (let weight of perceptron.weights) newWeights.push(mutate(weight, network.learningRate))
+    for (let weight of perceptron.weights) newWeights.push(perceptron.mutateWeight(weight, network.learningRate))
 
     perceptron.weights = newWeights
 }
@@ -121,13 +120,11 @@ Perceptron.prototype.createWeights = function(inputs) {
 
     for (let i = 0; i < weightCount; i++) {
 
-        // Get a random value relative to the size of learningRate
+        const weight = perceptron.mutateWeight(0, Math.random() * network.learningRate)
 
-        let value = Math.random() * network.learningRate
-
-        // Add value to weights
+        // Add weight to weights
         
-        perceptron.weights.push(value)
+        perceptron.weights.push(weight)
     }
 }
 
